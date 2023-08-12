@@ -2,9 +2,6 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-
-
-
 function sanitiseFilename($file) {
     // Remove anything which isn't a word, whitespace, number
     // or any of the following caracters -_~,;[]().
@@ -19,7 +16,7 @@ function sanitiseFilename($file) {
       return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
 }
 
-function createStylesheet($id,$imagefile) {
+function createStylesheetFromLocal($id,$imagefile) {
     $stylesheet = file_get_contents('normalize.css');
     $stylesheet .= file_get_contents('template-'.intval($id).'.css');
     $imagefile = sanitiseFilename($imagefile);
@@ -30,6 +27,30 @@ function createStylesheet($id,$imagefile) {
     }
         
     $stylesheet = str_replace("{{image}}", $imagefile, $stylesheet);
+        
+    return $stylesheet;
+}
+
+function createStyleSheetFromBase64($id,$blob) {
+    $stylesheet = file_get_contents('normalize.css');
+    $stylesheet .= file_get_contents('template-'.intval($id).'.css');
+    
+    $blobparts = explode(";base64,",$blob);
+    
+    if (sizeof($blobparts) == 2) {
+    
+        if(!str_starts_with($blobparts[0],"data:image/")) {
+            $blob = "img/t".intval($id)."-default.jpg";
+        }  
+
+        if (!is_base64($blobparts[1])) {
+            $blob = "img/t".intval($id)."-default.jpg";
+        }
+    } else {
+        $blob = "img/t".intval($id)."-default.jpg";
+    }
+        
+    $stylesheet = str_replace("{{image}}", $blob, $stylesheet);
         
     return $stylesheet;
 }
@@ -128,10 +149,17 @@ function pdfToBase64($blob,$format) {
     
 }
 
-$brainzstyle = createStylesheet(1,"brainz.jpg");
-$arthtml = createArtHTML("DJ Brainz",null,"Saturday x 1500 - 1700 GMT", "Sub.fm");                      
-$pdfoutput = createPDFBlob($brainzstyle,$arthtml);
-$art = pdfToBase64($pdfoutput,"jpg");
+function brainzTest() {
+
+    $brainzstyle = createStyleSheetFromBase64(1,"data:image/jpg;base64,".base64_encode(file_get_contents("djs/t1-brainz.jpg")));
+    // echo var_dump($brainzstyle); exit();
+    $arthtml = createArtHTML("DJ Brainz",null,"Saturday x 1500 - 1700 GMT", "Sub.fm");                      
+    $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
+    $art = pdfToBase64($pdfoutput,"jpg");
+
+    return $art;
+
+}
 
 ?>
 <!doctype html>
@@ -145,7 +173,7 @@ $art = pdfToBase64($pdfoutput,"jpg");
   <link rel="stylesheet" href="normalize.css">
 </head>
 <body>
-    <?php echo '<img src="'.$art.'" alt="" />'; ?>
+    <?php echo '<img src="'.brainzTest().'" alt="" />'; ?>
 </body>
 </html>
 
