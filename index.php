@@ -4,9 +4,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 
 
-$templatehtml = file_get_contents('art.html');
-
-
 
 function sanitiseFilename($file) {
     // Remove anything which isn't a word, whitespace, number
@@ -23,8 +20,8 @@ function sanitiseFilename($file) {
 }
 
 function createStylesheet($id,$imagefile) {
-    $stylesheet = file_get_contents('css/normalize.css');
-    $stylesheet .= file_get_contents('css/template-'.intval($id).'.css');
+    $stylesheet = file_get_contents('normalize.css');
+    $stylesheet .= file_get_contents('template-'.intval($id).'.css');
     $imagefile = sanitiseFilename($imagefile);
     if (file_exists("djs/".$imagefile)) {
         $imagefile = "djs/".$imagefile;
@@ -36,8 +33,6 @@ function createStylesheet($id,$imagefile) {
         
     return $stylesheet;
 }
-
-$brainzstyle = createStylesheet(1,"brainz.jpg");
 
 function createPDFBlob($stylesheet,$html) {
     
@@ -73,7 +68,49 @@ function createPDFBlob($stylesheet,$html) {
     return $mpdf->Output('', 'S');
 }
 
-$pdfoutput = createPDFBlob($brainzstyle,file_get_contents('art.html'));
+function createArtHTML($djname = "", $subtitle = "", $dateline = "", $station = "") {
+    if (!$djname) {
+        $djname = "";
+    } else {
+        $djname = filter_var ( $djname, FILTER_SANITIZE_STRING); 
+    }
+    
+    if (!$subtitle) {
+        $subtitle = "";
+    } else {
+        $subtitle = filter_var ( $subtitle, FILTER_SANITIZE_STRING); 
+    }
+    
+    if (!$dateline) {
+        $dateline = "";
+    } else {
+        $dateline = filter_var ( $dateline, FILTER_SANITIZE_STRING); 
+    }
+    
+    if (!$station) {
+        $station = "";
+    } else {
+        $station = filter_var ( $station, FILTER_SANITIZE_STRING); 
+    }
+    
+    // Get HTML template
+    $template = file_get_contents('template.html');
+    
+    // Remove script tags
+    $template = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $template);
+    
+    // Strip other tage for security
+    $template = trim(strip_tags($template, ['body', 'div', 'h1', 'h2', 'h3', 'h4']));
+    
+    // replace show attribute tokens with defined values
+    $template = str_replace("{{djname}}",$djname,$template);
+    $template = str_replace("{{subtitle}}",$subtitle,$template);
+    $template = str_replace("{{dateline}}",$dateline,$template);
+    $template = str_replace("{{station}}",$station,$template);
+                           
+    return $template;
+    
+}
 
 function pdfToBase64($blob,$format) {
     if ($format !== "jpg" && $format !== "png") {
@@ -82,7 +119,7 @@ function pdfToBase64($blob,$format) {
 
     $image = new Imagick();
     $image->readImageBlob($blob);
-    $image->setResolution( 1080, 1080 );
+    $image->setResolution( 800, 800 );
     $image->setImageFormat( $format );
     $image->setImageCompressionQuality(80);
     $imageBase64 = "data:image/".$format.";base64, ".base64_encode($image->getImageBlob());
@@ -91,6 +128,9 @@ function pdfToBase64($blob,$format) {
     
 }
 
+$brainzstyle = createStylesheet(1,"brainz.jpg");
+$arthtml = createArtHTML("DJ Brainz",null,"Saturday x 1500 - 1700 GMT", "Sub.fm");                      
+$pdfoutput = createPDFBlob($brainzstyle,$arthtml);
 $art = pdfToBase64($pdfoutput,"jpg");
 
 ?>
@@ -102,8 +142,7 @@ $art = pdfToBase64($pdfoutput,"jpg");
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="normalize.css">
 </head>
 <body>
     <?php echo '<img src="'.$art.'" alt="" />'; ?>

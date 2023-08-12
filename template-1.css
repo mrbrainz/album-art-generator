@@ -63,7 +63,6 @@
 }
 
 #block-1 {
-    background-image: url(/img/t1-default.jpg);
     background: url({{image}}) center center no-repeat #000;
     /*background: url(img/template1.jpg) center center no-repeat #000; */ 
     width: 1080px;
@@ -89,7 +88,7 @@
 }
 
 #block-4 {
-    background: url(/img/t1-oslogos.png) center center no-repeat transparent;
+    background: url(img/t1-oslogos.png) center center no-repeat transparent;
     width: 184px;
     height: 61px;
     left: 711px;
@@ -97,7 +96,7 @@
 }
 
 #block-5 {
-    background: url(/img/t1-alexa.png) center center no-repeat transparent;
+    background: url(img/t1-alexa.png) center center no-repeat transparent;
     width: 160px;
     height: 57px;
     left: 903px;
@@ -105,7 +104,7 @@
 }
 
 #block-6 {
-    background: url(/img/t1-sublogo.png) center center no-repeat transparent;
+    background: url(img/t1-sublogo.png) center center no-repeat transparent;
     width: 205px;
     height: 49px;
     left: 44px;
