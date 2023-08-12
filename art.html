@@ -1,0 +1,36 @@
+
+<body>
+<div id="block-1"></div>
+<div id="block-2"></div>
+<div id="block-3"></div>
+<div id="block-4"></div>
+<div id="block-5"></div>
+<div id="block-6"></div>
+<div id="block-7"></div>
+<div id="block-8"></div>
+<div id="block-9"></div>
+<div id="block-10"></div>
+<h1 id="djname">{{djname}}</h1>
+<h2 id="subtitle">{{subtitle}}</h2>
+<h3 id="dateline">{{dateline}}</h3>
+<h4 id="station">{{station}}</h4>
+</body>
+
+
+
+
+
+
+<script type="text/javascript">
+    var ss = document.createElement("link");
+    ss.type = "text/css";
+    ss.rel = "stylesheet";
+    ss.href = "normalize.css";
+    var ss2 = document.createElement("link");
+    ss2.type = "text/css";
+    ss2.rel = "stylesheet";
+    ss2.href = "style.css";
+    var container = document.getElementById("station");
+    container.after(ss);
+    container.after(ss2);
+</script>
