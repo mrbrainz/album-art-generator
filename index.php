@@ -2,6 +2,44 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+function isPost() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        return true;
+    }
+    return false;
+}
+
+function readPostData() {
+    $output = [];
+    if (isset($_POST['djname'])) {
+        $output['djname'] = $_POST['djname'];
+    } else {
+        $output['djname'] = "";
+    }
+    if (isset($_POST['subtitle'])) {
+        $output['subtitle'] = $_POST['subtitle'];
+    } else {
+        $output['subtitle'] = "";
+    }
+    if (isset($_POST['dateline'])) {
+        $output['dateline'] = $_POST['dateline'];
+    } else {
+        $output['dateline'] = "";
+    }
+    if (isset($_POST['station'])) {
+        $output['station'] = $_POST['station'];
+    } else {
+        $output['station'] = "";
+    }
+    if (isset($_POST['image']) && is_base64_image($_POST['image'])) {
+        $output['image'] = $_POST['image'];
+    } else {
+        $output['image'] = ""; 
+    }
+    
+    return $output;
+}
+
 function sanitiseFilename($file) {
     // Remove anything which isn't a word, whitespace, number
     // or any of the following caracters -_~,;[]().
@@ -15,6 +53,25 @@ function sanitiseFilename($file) {
  function is_base64($s) {
       return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
 }
+
+ function is_base64_image($s) {
+     $s = explode(";base64,",$s);
+    
+    if (sizeof($s) == 2) {
+    
+        if(!str_starts_with($s[0],"data:image/")) {
+            return false;
+        }  
+
+        if (!is_base64($blobparts[1])) {
+            return false;
+        }
+    } else {
+        return false;
+    }
+     
+    return true;
+ }
 
 function createStylesheetFromLocal($id,$imagefile) {
     $stylesheet = file_get_contents('normalize.css');
@@ -159,6 +216,20 @@ function brainzTest() {
 
     return $art;
 
+}
+
+function createImageFromPost() {
+    $postdata = readPostData();
+    $style = createStyleSheetFromBase64(1,$postdata['image']);
+    // echo var_dump($brainzstyle); exit();
+    $arthtml = createArtHTML($postdata['djname'],$postdata['subtitle'],$postdata['dateline'], $postdata['station']);                      
+    $pdfoutput = createPDFBlob($style,$arthtml);
+    $art = pdfToBase64($pdfoutput,"jpg");
+    return $art;
+}
+
+if (isPost()) {
+    echo createImageFromPost(); exit();
 }
 
 ?>
