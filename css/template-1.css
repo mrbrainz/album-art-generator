@@ -63,7 +63,7 @@
 }
 
 #block-1 {
-    background: url(djs/brainz.jpg) center center no-repeat #000;
+    background: url({{image}}) center center no-repeat #000;
     /*background: url(img/template1.jpg) center center no-repeat #000; */ 
     width: 1080px;
     height: 734px;
