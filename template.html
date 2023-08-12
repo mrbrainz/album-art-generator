@@ -22,6 +22,14 @@
 
 
 <script type="text/javascript">
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    var templateID = parseInt(urlParams.get('id'));
+    
+    if (!templateID) {
+        templateID = 1;
+    }
+    
     var ss = document.createElement("link");
     ss.type = "text/css";
     ss.rel = "stylesheet";
@@ -29,8 +37,16 @@
     var ss2 = document.createElement("link");
     ss2.type = "text/css";
     ss2.rel = "stylesheet";
-    ss2.href = "css/template-1.css";
+    ss2.href = "css/template-"+templateID+".css";
     var container = document.getElementById("station");
     container.after(ss);
     container.after(ss2);
+    
+    var style = document.createElement('style'),
+    defaultOverrdie = 'body #block-1 { \
+        background-image: url(/img/t'+templateID+'-default.jpg); \
+    }';
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(defaultOverrdie));
+    container.after(style);
 </script>
