@@ -1,0 +1,64 @@
+@use 'template-base'; 
+
+#block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #text1, #text2, #text3, #text4 {
+    font-family: nimbus-sans-bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#block-1 {
+    background: url({{image}}) center center no-repeat #000;
+    /* background: url(img/template1.jpg) center center no-repeat #000!important; */
+    width: 1080px;
+    height: 1080px;
+    top:0px;
+    left: 0px;
+}
+
+#block-2 {
+    background: url(img/t1-wbm.png) center center no-repeat transparent;
+    width: 220px;
+    height: 56px;
+    left: 35px;
+    top: 987px;
+}
+
+#block-3 {
+    background: url(img/t1-subicon.png) center center no-repeat transparent;
+    width: 166px;
+    height: 130px;
+    left: 877px;
+    top: 914px;
+}
+    
+#text1, #text2, #text3, #text4 {
+    color: #EEEEEE;
+    font-size: 45px;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+#text1 {
+    top: 26px;
+    left: 39px;
+}
+
+#text2 {
+    top: 74px;
+    left: 34px;
+}
+
+#text3 {
+    top: 26px;
+    left: 671px;
+}
+
+#text4 {
+    left: 671px;
+    top: 76px;
+}
+
+#block-10 {
+    width:1080px;
+    height: 1080px;
+    top: 0px;
+    left: 0px;
+}
