@@ -18,3 +18,7 @@
 #prev-col #base64-code {
   max-width: 300px;
 }
+
+#converter-img {
+  display: none;
+}

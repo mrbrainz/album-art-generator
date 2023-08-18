@@ -11,7 +11,7 @@ function setupButtons() {
 
     var fd = getFormData(),
     djimage = false;
-    console.log(fd.djimage)
+    //console.log(fd.djimage)
     if (fd.djimage) {
       djimage = convertImageToBase64(fd.djimage);
     } else {
@@ -27,6 +27,8 @@ function convertImageToBase64(theimage) {
      if (theimage.size > 0) {
         var reader = new FileReader();
         reader.onload = function(e) {
+
+           //console.log(e.target);
            image.src = e.target.result;
            postFormToServer(getFormData(),true);
         }
@@ -39,7 +41,7 @@ function getFormData() {
     formData = new FormData(formfields),
     formentries = Object.fromEntries(formData);
 
-    console.log(formentries);
+    //console.log(formentries);
     return formentries;
 }
 
@@ -71,7 +73,7 @@ function postFormToServer(formdata,hasImage) {
                      "text4": encodeURIComponent(formdata.text4),
                      "img":   encodeURIComponent(img)
                    }));
-    console.log(payload);
+    //console.log(payload);
     xmlhttp.open("POST","/",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send(payload);

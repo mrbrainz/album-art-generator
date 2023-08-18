@@ -50,7 +50,7 @@
                             <div class="file-field input-field">
                               <div class="btn">
                                 <span>Image <i class="material-icons right">attachment</i></span>
-                                <input type="file" name="djimage" id="djimage">
+                                <input type="file" name="djimage" id="djimage" accept="image/*">
                               </div>
                               <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text">
