@@ -16,9 +16,11 @@ function isPost() {
 }
 
 function readPostData() {
+
     $output = [];
     if (isset($_POST['payload'])) {
         $output = json_decode($_POST['payload'], true);
+        // var_dump($output);
         foreach($output as $key=>$value) {
             $output[$key] = urldecode($value);
         }
@@ -56,7 +58,6 @@ function sanitiseFilename($file) {
     } else {
         return false;
     }
-     
     return true;
  }
 
@@ -81,17 +82,17 @@ function createStyleSheetFromBase64($id,$blob) {
     
     $blobparts = explode(";base64,",$blob);
 
-    //echo var_dump($blobparts);
-    
-    if (sizeof($blobparts) == 2) {
-    
+    // var_dump($blobparts);
+
+    if (sizeof($blobparts) == 2) { 
+
         if(!str_starts_with($blobparts[0],"data:image/")) {
             $blob = "img/t".intval($id)."-default.jpg";
         }  
 
-        if (!is_base64($blobparts[1])) {
+        /* if (!is_base64($blobparts[1])) {
             $blob = "img/t".intval($id)."-default.jpg";
-        }
+        }*/
     } else {
         $blob = "img/t".intval($id)."-default.jpg";
     }
@@ -145,25 +146,25 @@ function createArtHTML($text1 = "", $text2 = "", $text3 = "", $text4 = "") {
     if (!$text1) {
         $text1 = "";
     } else {
-        $text1 = filter_var ( $text1, FILTER_SANITIZE_STRING); 
+        $text1 = htmlspecialchars( $text1 ); 
     }
     
     if (!$text2) {
         $text2 = "";
     } else {
-        $text2 = filter_var ( $text2, FILTER_SANITIZE_STRING); 
+        $text2 = htmlspecialchars( $text2 ); 
     }
     
     if (!$text3) {
         $text3 = "";
     } else {
-        $text3 = filter_var ( $text3, FILTER_SANITIZE_STRING); 
+        $text3 = htmlspecialchars(  $text3 ); 
     }
     
     if (!$text4) {
         $text4 = "";
     } else {
-        $text4 = filter_var ( $text4, FILTER_SANITIZE_STRING); 
+        $text4 = htmlspecialchars(  $text4 ); 
     }
     
     // Get HTML template
@@ -215,9 +216,9 @@ function brainzTest() {
 
 function createImageFromPost() {
     $postdata = readPostData();
-    //echo var_dump($postdata);
+    // var_dump($postdata);
     $style = createStyleSheetFromBase64(1,$postdata['img']);
-    //echo var_dump($style); exit();
+    // var_dump($style); exit();
     $arthtml = createArtHTML($postdata['text1'],$postdata['text2'],$postdata['text3'], $postdata['text4']);                      
     $pdfoutput = createPDFBlob($style,$arthtml);
     $art = pdfToBase64($pdfoutput,"jpg");

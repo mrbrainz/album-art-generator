@@ -63,6 +63,14 @@
 		"oF": 0,
 		"oS": 3
 		},
+	"/curlexample.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/curlexample.php",
+		"oF": 0
+		},
 	"/djs": {
 		"ft": 65536,
 		"oA": 1,
