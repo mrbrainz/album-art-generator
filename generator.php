@@ -20,33 +20,45 @@
                 <br>
                 <h1 class="header center black-text">Album Art Generator By BrainZ</h1>
                 <div class="row">
-                    <form class="col s12 m4">
+                    <form class="col s12 m4" id="djcreds">
+                        <input type="hidden" name="templateid" value="1" />
                         <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="DJ Name" id="text-1" type="text" class="validate" name="text-1">
-                                <label for="text-1">DJ Name</label>
+                                <input placeholder="DJ Name" id="text1" type="text" class="validate" name="text1">
+                                <label for="text1">DJ Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="e.g. Collab" id="text-2" name="text-2" type="text" class="validate">
-                                <label for="text-2">Second line</label>
+                                <input placeholder="e.g. Collab" id="text2" name="text2" type="text" class="validate">
+                                <label for="text2">Second line</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="12 Aug 2023" id="text-3" name="text-3" type="text" class="validate">
-                                <label for="text-3">Date of Show</label>
+                                <input placeholder="12 Aug 2023" id="text3" name="text3" type="text" class="validate">
+                                <label for="text3">Date of Show</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input placeholder="3-5PM" id="text-4" name="text-4" type="text" class="validate">
-                                <label for="text-4">Time of Show</label>
+                                <input placeholder="3-5PM" id="text4" name="text4" type="text" class="validate">
+                                <label for="text4">Time of Show</label>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="file-field input-field">
+                              <div class="btn">
+                                <span>Image <i class="material-icons right">attachment</i></span>
+                                <input type="file" name="djimage" id="djimage">
+                              </div>
+                              <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                              </div>
                             </div>
                         </div>
 
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Generate <i class="material-icons right">rocket</i>
+                        <button class="btn waves-effect waves-light" id="artsubmit" type="submit" name="action">Generate <i class="material-icons right">rocket</i>
                         </button>
                         
                     </form>
@@ -60,6 +72,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="converter">
+            <img id="converter-img" src="img/t1-default.jpg" alt="" />
         </div>
         <footer class="page-footer grey darken-4">
             <div class="container">

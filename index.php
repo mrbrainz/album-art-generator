@@ -240,7 +240,9 @@ function createImageFromPost() {
 }
 
 if (isPost()) {
-    echo createImageFromPost(); exit();
+    header('Status: 200');
+    echo createImageFromPost(); 
+    exit();
 }
 
 ?>
