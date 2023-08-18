@@ -1,254 +1,104 @@
-<?php
-$startTime = microtime(true);  
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-function isPost() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
-          $this->output->set_status_header(400, 'No Remote Access Allowed');
-          exit; //just for good measure
-        }
-        return true;
-    }
-    return false;
-}
-
-function readPostData() {
-    $output = [];
-    if (isset($_POST['payload'])) {
-        $output = json_decode($_POST['payload'], true);
-        foreach($output as $key=>$value) {
-            $output[$key] = urldecode($value);
-        }
-    }
-
-    return $output;
-}
-
-function sanitiseFilename($file) {
-    // Remove anything which isn't a word, whitespace, number
-    // or any of the following caracters -_~,;[]().
-    $file = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $file);
-    // Remove any runs of periods
-    $file = mb_ereg_replace("([\.]{2,})", '', $file);
-    
-    return $file;
-}
-
- function is_base64($s) {
-      return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
-}
-
- function is_base64_image($s) {
-     $s = explode(";base64,",$s);
-    
-    if (sizeof($s) == 2) {
-    
-        if(!str_starts_with($s[0],"data:image/")) {
-            return false;
-        }  
-
-        if (!is_base64($blobparts[1])) {
-            return false;
-        }
-    } else {
-        return false;
-    }
-     
-    return true;
- }
-
-function createStylesheetFromLocal($id,$imagefile) {
-    $stylesheet = file_get_contents('normalize.css');
-    $stylesheet .= file_get_contents('template-'.intval($id).'.css');
-    $imagefile = sanitiseFilename($imagefile);
-    if (file_exists("djs/".$imagefile)) {
-        $imagefile = "djs/".$imagefile;
-    } else {
-        $imagefile = "img/t".intval($id)."-default.jpg";
-    }
-        
-    $stylesheet = str_replace("{{image}}", $imagefile, $stylesheet);
-        
-    return $stylesheet;
-}
-
-function createStyleSheetFromBase64($id,$blob) {
-    $stylesheet = file_get_contents('normalize.css');
-    $stylesheet .= file_get_contents('template-'.intval($id).'.css');
-    
-    $blobparts = explode(";base64,",$blob);
-
-    //echo var_dump($blobparts);
-    
-    if (sizeof($blobparts) == 2) {
-    
-        if(!str_starts_with($blobparts[0],"data:image/")) {
-            $blob = "img/t".intval($id)."-default.jpg";
-        }  
-
-        if (!is_base64($blobparts[1])) {
-            $blob = "img/t".intval($id)."-default.jpg";
-        }
-    } else {
-        $blob = "img/t".intval($id)."-default.jpg";
-    }
-        
-    $stylesheet = str_replace("{{image}}", $blob, $stylesheet);
-        
-    return $stylesheet;
-}
-
-function createPDFBlob($stylesheet,$html) {
-    
-    // Add config for custom font folder
-    $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
-    $fontDirs = $defaultConfig['fontDir'];
-
-    $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
-    $fontData = $defaultFontConfig['fontdata'];
-
-    $mpdf = new \Mpdf\Mpdf([
-        'mode' => 'utf-8', 
-        'dpi' => 72,
-        'img_dpi' => 72,
-        'format' => [381, 381],
-        'fontDir' => array_merge($fontDirs, [
-            __DIR__ . '/fonts',
-        ]),
-        'fontdata' => $fontData +[ 
-            'pragmatica' => [
-                'R' => 'PragmaticaMedium.ttf'
-            ],
-            'nimbus-sans-ultralight' => [
-                'R' => 'NimbusSansNovusT-UltraLight.ttf'
-            ]
-            ,
-            'nimbus-sans-regular' => [
-                'R' => 'NimbusSanL-Reg.ttf'
-            ],
-            'nimbus-sans-bold' => [
-                'R' => 'NimbusSanL-Bol.ttf'
-            ]
-        ]
-        ]);
-    $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
-    $mpdf->WriteHTML($html,\Mpdf\HTMLParserMode::HTML_BODY);
-    
-    return $mpdf->Output('', 'S');
-    //$mpdf->Output('', 'I'); exit();
-}
-
-function createArtHTML($text1 = "", $text2 = "", $text3 = "", $text4 = "") {
-    if (!$text1) {
-        $text1 = "";
-    } else {
-        $text1 = filter_var ( $text1, FILTER_SANITIZE_STRING); 
-    }
-    
-    if (!$text2) {
-        $text2 = "";
-    } else {
-        $text2 = filter_var ( $text2, FILTER_SANITIZE_STRING); 
-    }
-    
-    if (!$text3) {
-        $text3 = "";
-    } else {
-        $text3 = filter_var ( $text3, FILTER_SANITIZE_STRING); 
-    }
-    
-    if (!$text4) {
-        $text4 = "";
-    } else {
-        $text4 = filter_var ( $text4, FILTER_SANITIZE_STRING); 
-    }
-    
-    // Get HTML template
-    $template = file_get_contents('template.html');
-    
-    // Remove script tags
-    $template = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $template);
-    
-    // Strip other tage for security
-    $template = trim(strip_tags($template, ['body', 'div', 'h1', 'h2', 'h3', 'h4']));
-    
-    // replace show attribute tokens with defined values
-    $template = str_replace("{{text1}}",$text1,$template);
-    $template = str_replace("{{text2}}",$text2,$template);
-    $template = str_replace("{{text3}}",$text3,$template);
-    $template = str_replace("{{text4}}",$text4,$template);
-                           
-    return $template;
-    
-}
-
-function pdfToBase64($blob,$format) {
-    if ($format !== "jpg" && $format !== "png") {
-        $format = "jpg";
-    }
-
-    $image = new Imagick();
-    $image->readImageBlob($blob);
-    $image->setResolution( 1080, 1080 );
-    $image->setImageFormat( $format );
-    $image->setImageCompressionQuality(80);
-    $imageBase64 = "data:image/".$format.";base64, ".base64_encode($image->getImageBlob());
-    
-    return $imageBase64;
-    
-}
-
-function brainzTest() {
-
-    $brainzstyle = createStyleSheetFromBase64(1,"data:image/jpg;base64,".base64_encode(file_get_contents("djs/t1-brainz.jpg")));
-    // echo var_dump($brainzstyle); exit();
-    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");                      
-    $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
-    $art = pdfToBase64($pdfoutput,"jpg");
-    //$art = "performance";
-    return $art;
-
-}
-
-function createImageFromPost() {
-    $postdata = readPostData();
-    //echo var_dump($postdata);
-    $style = createStyleSheetFromBase64(1,$postdata['img']);
-    //echo var_dump($style); exit();
-    $arthtml = createArtHTML($postdata['text1'],$postdata['text2'],$postdata['text3'], $postdata['text4']);                      
-    $pdfoutput = createPDFBlob($style,$arthtml);
-    $art = pdfToBase64($pdfoutput,"jpg");
-    return $art;
-}
-
-if (isPost()) {
-    header('Status: 200');
-    echo json_encode(['img' => createImageFromPost()]); 
-    exit();
-}
-
-?>
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>Album Art Generator By BrainZ</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+        <link href="css/generator.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <nav class="grey darken-4" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="https://sub.fm" class="brand-logo">
+                    <img src="img/sublogo.png" alt="sub.fm" />
+                </a>
+            </div>
+        </nav>
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="container">
+                <h1 class="header center black-text">Album Art Generator</h1>
+                <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
+                <br>
+                <div class="row">
+                    <form class="col s12 m6" id="djcreds">
+                        <input type="hidden" name="templateid" value="1" />
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="DJ Name" id="text1" type="text" class="validate" name="text1">
+                                <label for="text1">DJ Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="e.g. Collab" id="text2" name="text2" type="text" class="validate">
+                                <label for="text2">Second line</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Sat 12 Aug 2023" id="text3" name="text3" type="text" class="validate">
+                                <label for="text3">Date of Show</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="3-5PM" id="text4" name="text4" type="text" class="validate">
+                                <label for="text4">Time of Show</label>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="file-field input-field">
+                              <div class="btn">
+                                <span>Image <i class="material-icons right">attachment</i></span>
+                                <input type="file" name="djimage" id="djimage" accept="image/*">
+                              </div>
+                              <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                              </div>
+                              <span class="helper-text">JPG & PNG accepted</span>
+                            </div>
+                        </div>
 
-  <link rel="stylesheet" href="normalize.css">
-</head>
-<body>
-    <?php echo '<img src="'.brainzTest().'" alt="" />'; ?>
-</body>
+                        <button class="btn waves-effect waves-light" id="artsubmit" type="submit" name="action">Generate <i class="material-icons right">rocket</i>
+                        </button>
+                        
+                    </form>
+                    <div class="col s12 m6" id="prev-col">
+                        <div class="row">
+                            <div id="image-preview"><img id="art-preview" alt="Art Preview" src="img/t1-default.jpg" /></div>
+                            <div id="base64-code" class="input-field col s12">
+                                <textarea id="base64-art" rows="10" readonly></textarea>
+                                <span class="helper-text">Base64 Output</span>
+                            </div>
+                        </div>
+                            <button class="btn waves-effect waves-light" id="copy-base64">Copy to Clipboard <i class="material-icons right">content_paste_go</i>
+                            </button>  <button class="btn waves-effect waves-light" id="download">Download <i class="material-icons right">download</i>
+                            </button>      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="converter">
+            <img id="converter-img" src="img/t1-default.jpg" alt="" />
+        </div>
+        <footer class="page-footer grey darken-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Sub.FM</h5>
+                        <p class="white-text">Where Bass Matters</p>
+                    </div>
+                    <div class="col l3 s12"></div>
+                    <div class="col l3 s12"></div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container"> Made by <a class="white-text" href="http://djbrainz.com">DJ BrainZ</a>
+                </div>
+            </div>
+        </footer>
+        <script src="js/materialize.min.js"></script>
+        <script src="js/generator.js"></script>
+    </body>
 </html>
-
-<?php 
-
-$endTime = microtime(true);  
-    $elapsed = $endTime - $startTime;
-    echo "<!-- Execution time : $elapsed seconds -->";
-
-exit();

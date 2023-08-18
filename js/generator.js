@@ -28,8 +28,22 @@ function setupButtons() {
   document.getElementById('copy-base64').addEventListener('click',function(e){
     e.preventDefault();
     copyToClipboard();
-    M.toast({html: 'Image Base64 copied to clipboard'});
     });
+
+  document.getElementById('download').addEventListener('click',function(e){
+    e.preventDefault();
+    
+    var base64 = document.getElementById("base64-art").value
+
+    if (!base64) {
+      return false;
+    } else {
+      downloadBase64File(base64, 'albumart.jpg');
+      M.toast({html: 'Download Triggered!'});
+    }
+
+    });
+
 
 
 }
@@ -38,12 +52,17 @@ function copyToClipboard() {
   // Get the text field
   var copyText = document.getElementById('base64-art');
 
+  if (!copyText.value) {
+    return false;
+  }
+
   // Select the text field
   copyText.select();
   copyText.setSelectionRange(0, 99999); // For mobile devices
 
    // Copy the text inside the text field
   navigator.clipboard.writeText(copyText.value);
+  M.toast({html: 'Image Base64 copied to clipboard'});
 }
 
 function convertImageToBase64(theimage) {
@@ -101,8 +120,19 @@ function postFormToServer(formdata,hasImage) {
                      "img":   encodeURIComponent(img)
                    }));
     //console.log(payload);
-    xmlhttp.open("POST","/",true);
+    xmlhttp.open("POST","/generate.php",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send(payload);
 }
+
+function downloadBase64File(base64Data, fileName) {
+  const linkSource = base64Data;
+  const downloadLink = document.createElement("a");
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+  downloadLink.remove();
+}
+ 
+
 
