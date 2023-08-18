@@ -1,9 +1,14 @@
 <?php
+$startTime = microtime(true);  
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 function isPost() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
+          $this->output->set_status_header(400, 'No Remote Access Allowed');
+          exit; //just for good measure
+        }
         return true;
     }
     return false;
@@ -11,25 +16,25 @@ function isPost() {
 
 function readPostData() {
     $output = [];
-    if (isset($_POST['djname'])) {
-        $output['djname'] = $_POST['djname'];
+    if (isset($_POST['text1'])) {
+        $output['text1'] = $_POST['text1'];
     } else {
-        $output['djname'] = "";
+        $output['text1'] = "";
     }
-    if (isset($_POST['subtitle'])) {
-        $output['subtitle'] = $_POST['subtitle'];
+    if (isset($_POST['text2'])) {
+        $output['text2'] = $_POST['text2'];
     } else {
-        $output['subtitle'] = "";
+        $output['text2'] = "";
     }
-    if (isset($_POST['dateline'])) {
-        $output['dateline'] = $_POST['dateline'];
+    if (isset($_POST['text3'])) {
+        $output['text3'] = $_POST['text3'];
     } else {
-        $output['dateline'] = "";
+        $output['text3'] = "";
     }
-    if (isset($_POST['station'])) {
-        $output['station'] = $_POST['station'];
+    if (isset($_POST['text4'])) {
+        $output['text4'] = $_POST['text4'];
     } else {
-        $output['station'] = "";
+        $output['text4'] = "";
     }
     if (isset($_POST['image']) && is_base64_image($_POST['image'])) {
         $output['image'] = $_POST['image'];
@@ -123,7 +128,9 @@ function createPDFBlob($stylesheet,$html) {
 
     $mpdf = new \Mpdf\Mpdf([
         'mode' => 'utf-8', 
-        'format' => [282.3, 282.3],
+        'dpi' => 72,
+        'img_dpi' => 72,
+        'format' => [381, 381],
         'fontDir' => array_merge($fontDirs, [
             __DIR__ . '/fonts',
         ]),
@@ -137,6 +144,9 @@ function createPDFBlob($stylesheet,$html) {
             ,
             'nimbus-sans-regular' => [
                 'R' => 'NimbusSanL-Reg.ttf'
+            ],
+            'nimbus-sans-bold' => [
+                'R' => 'NimbusSanL-Bol.ttf'
             ]
         ]
         ]);
@@ -144,31 +154,32 @@ function createPDFBlob($stylesheet,$html) {
     $mpdf->WriteHTML($html,\Mpdf\HTMLParserMode::HTML_BODY);
     
     return $mpdf->Output('', 'S');
+    //$mpdf->Output('', 'I'); exit();
 }
 
-function createArtHTML($djname = "", $subtitle = "", $dateline = "", $station = "") {
-    if (!$djname) {
-        $djname = "";
+function createArtHTML($text1 = "", $text2 = "", $text3 = "", $text4 = "") {
+    if (!$text1) {
+        $text1 = "";
     } else {
-        $djname = filter_var ( $djname, FILTER_SANITIZE_STRING); 
+        $text1 = filter_var ( $text1, FILTER_SANITIZE_STRING); 
     }
     
-    if (!$subtitle) {
-        $subtitle = "";
+    if (!$text2) {
+        $text2 = "";
     } else {
-        $subtitle = filter_var ( $subtitle, FILTER_SANITIZE_STRING); 
+        $text2 = filter_var ( $text2, FILTER_SANITIZE_STRING); 
     }
     
-    if (!$dateline) {
-        $dateline = "";
+    if (!$text3) {
+        $text3 = "";
     } else {
-        $dateline = filter_var ( $dateline, FILTER_SANITIZE_STRING); 
+        $text3 = filter_var ( $text3, FILTER_SANITIZE_STRING); 
     }
     
-    if (!$station) {
-        $station = "";
+    if (!$text4) {
+        $text4 = "";
     } else {
-        $station = filter_var ( $station, FILTER_SANITIZE_STRING); 
+        $text4 = filter_var ( $text4, FILTER_SANITIZE_STRING); 
     }
     
     // Get HTML template
@@ -181,10 +192,10 @@ function createArtHTML($djname = "", $subtitle = "", $dateline = "", $station = 
     $template = trim(strip_tags($template, ['body', 'div', 'h1', 'h2', 'h3', 'h4']));
     
     // replace show attribute tokens with defined values
-    $template = str_replace("{{djname}}",$djname,$template);
-    $template = str_replace("{{subtitle}}",$subtitle,$template);
-    $template = str_replace("{{dateline}}",$dateline,$template);
-    $template = str_replace("{{station}}",$station,$template);
+    $template = str_replace("{{text1}}",$text1,$template);
+    $template = str_replace("{{text2}}",$text2,$template);
+    $template = str_replace("{{text3}}",$text3,$template);
+    $template = str_replace("{{text4}}",$text4,$template);
                            
     return $template;
     
@@ -197,7 +208,7 @@ function pdfToBase64($blob,$format) {
 
     $image = new Imagick();
     $image->readImageBlob($blob);
-    $image->setResolution( 800, 800 );
+    $image->setResolution( 1080, 1080 );
     $image->setImageFormat( $format );
     $image->setImageCompressionQuality(80);
     $imageBase64 = "data:image/".$format.";base64, ".base64_encode($image->getImageBlob());
@@ -210,10 +221,10 @@ function brainzTest() {
 
     $brainzstyle = createStyleSheetFromBase64(1,"data:image/jpg;base64,".base64_encode(file_get_contents("djs/t1-brainz.jpg")));
     // echo var_dump($brainzstyle); exit();
-    $arthtml = createArtHTML("DJ Brainz",null,"Saturday x 1500 - 1700 GMT", "Sub.fm");                      
+    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");                      
     $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
     $art = pdfToBase64($pdfoutput,"jpg");
-
+    //$art = "performance";
     return $art;
 
 }
@@ -222,7 +233,7 @@ function createImageFromPost() {
     $postdata = readPostData();
     $style = createStyleSheetFromBase64(1,$postdata['image']);
     // echo var_dump($brainzstyle); exit();
-    $arthtml = createArtHTML($postdata['djname'],$postdata['subtitle'],$postdata['dateline'], $postdata['station']);                      
+    $arthtml = createArtHTML($postdata['text1'],$postdata['text2'],$postdata['text3'], $postdata['text4']);                      
     $pdfoutput = createPDFBlob($style,$arthtml);
     $art = pdfToBase64($pdfoutput,"jpg");
     return $art;
@@ -248,4 +259,10 @@ if (isPost()) {
 </body>
 </html>
 
-<?php exit();
+<?php 
+
+$endTime = microtime(true);  
+    $elapsed = $endTime - $startTime;
+    echo "<!-- Execution time : $elapsed seconds -->";
+
+exit();

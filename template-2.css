@@ -1,0 +1,156 @@
+ html {color: #222;font-size: 1em;line-height: 1.4;}::-moz-selection {background: #b3d4fc;text-shadow: none;}::selection {background: #b3d4fc;text-shadow: none;}hr {display: block;height: 1px;border: 0;border-top: 1px solid #ccc;margin: 1em 0;padding: 0;}audio, canvas, iframe, img, svg, video {vertical-align: middle;}fieldset {border: 0;margin: 0;padding: 0;}textarea {resize: vertical;}.hidden, [hidden] {display: none !important;}.visually-hidden {border: 0;clip: rect(0, 0, 0, 0);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;white-space: nowrap;width: 1px;}.visually-hidden.focusable:active, .visually-hidden.focusable:focus {clip: auto;height: auto;margin: 0;overflow: visible;position: static;white-space: inherit;width: auto;}.invisible {visibility: hidden;}.clearfix::before, .clearfix::after {content: "";display: table;}.clearfix::after {clear: both;}@media only screen and (min-width: 35em) {}@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {}@media print {*, *::before, *::after {background: #fff !important;color: #000 !important;box-shadow: none !important;text-shadow: none !important;}a, a:visited {text-decoration: underline;}a[href]::after {content: " (" attr(href) ")";}abbr[title]::after {content: " (" attr(title) ")";}a[href^="#"]::after, a[href^="javascript:"]::after {content: "";}pre {white-space: pre-wrap !important;}pre, blockquote {border: 1px solid #999;page-break-inside: avoid;}tr, img {page-break-inside: avoid;}p, h2, h3 {orphans: 3;widows: 3;}h2, h3 {page-break-after: avoid;}}
+
+
+
+@page {
+	size: 300mm 300mm;
+	margin: 0;
+	margin-header: 0;
+	margin-footer: 0; 
+	marks: none;
+}
+
+
+#block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #djname, #subtitle, #dateline, #station {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    font-family: pragmatica, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#block-1 {
+    z-index: 10;
+}
+
+#block-2 {
+    z-index: 11;
+}
+
+#block-3 {
+    z-index: 12;
+}
+
+#block-4 {
+    z-index: 13;
+}
+
+#block-5 {
+    z-index: 14;
+}
+
+#block-6 {
+    z-index: 15;
+}
+
+#block-7 {
+    z-index: 16;
+}
+
+#block-8 {
+    z-index: 17;
+}
+
+#block-9 {
+    z-index: 18;
+}
+
+#block-10 {
+    z-index: 19;
+}
+
+#djname, #subtitle, #dateline, #station {
+    z-index: 100;
+}
+
+#block-1 {
+    background: url({{image}}) center center no-repeat #000;
+    /*background: url(img/template1.jpg) center center no-repeat #000; */ 
+    width: 1080px;
+    height: 734px;
+    top:246px;
+    left: 0px;
+}
+
+#block-2 {
+    top:0px;
+    left: 0px;
+    height: 246px;
+    width: 1080px;
+    background: #111E1C;
+}
+
+#block-3 {
+    top:980px;
+    left: 0px;
+    height: 100px;
+    width: 1080px;
+    background: #111E1C;
+}
+
+#block-4 {
+    background: url(img/t1-oslogos.png) center center no-repeat transparent;
+    width: 184px;
+    height: 61px;
+    left: 711px;
+    top: 996px;
+}
+
+#block-5 {
+    background: url(img/t1-alexa.png) center center no-repeat transparent;
+    width: 160px;
+    height: 57px;
+    left: 903px;
+    top: 999px;
+}
+
+#block-6 {
+    background: url(img/t1-sublogo.png) center center no-repeat transparent;
+    width: 205px;
+    height: 49px;
+    left: 44px;
+    top: 1003px;
+}
+    
+h1, h2, h3, h4 {
+    color: #DECCC2;
+}
+
+#djname {
+    top: 24px;
+    left: 39px;
+    font-size: 60px;
+    font-weight: 500;
+}
+
+#subtitle {
+    display: none;
+}
+
+#dateline {
+    top: 200px;
+    left: 43px;
+    font-weight: 200;
+    font-family: nimbus-sans-regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 28px;
+}
+
+#station {
+    color: #DECCC2;
+    font-size: 27px;
+    font-weight: 200;
+    font-family: nimbus-sans-regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    right: 38px;
+    top: 199px;
+}
+
+#block-10 {
+    width:1080px;
+    height: 1080px;
+    top: 0px;
+    left: 0px;
+}
+
+body {
+    width: 1080px;
+    position: relative;
+}

@@ -10,10 +10,10 @@
 <div id="block-8"></div>
 <div id="block-9"></div>
 <div id="block-10"></div>
-<h1 id="djname">{{djname}}</h1>
-<h2 id="subtitle">{{subtitle}}</h2>
-<h3 id="dateline">{{dateline}}</h3>
-<h4 id="station">{{station}}</h4>
+<h1 id="text1">{{text1}}</h1>
+<h2 id="text2">{{text2}}</h2>
+<h3 id="text3">{{text3}}</h3>
+<h4 id="text4">{{text4}}</h4>
 </body>
 
 
@@ -24,7 +24,14 @@
 <script type="text/javascript">
     
     const urlParams = new URLSearchParams(window.location.search);
-    var templateID = parseInt(urlParams.get('id'));
+    var templateID = parseInt(urlParams.get('id'))
+    indict = urlParams.get('indict').toLowerCase();
+    
+    if (indict === "true") {
+        indict = true;
+    } else {
+        indict = false;
+    }
     
     if (!templateID) {
         templateID = 1;
@@ -38,7 +45,7 @@
     ss2.type = "text/css";
     ss2.rel = "stylesheet";
     ss2.href = "template-"+templateID+".css";
-    var container = document.getElementById("station");
+    var container = document.getElementById("text4");
     container.after(ss);
     container.after(ss2);
     
@@ -49,4 +56,12 @@
     style.type = 'text/css';
     style.appendChild(document.createTextNode(defaultOverrdie));
     container.after(style);
+    
+    if (indict) {
+        document.getElementById("text1").innerText = "Mr Brainz";
+        document.getElementById("text2").innerText = "With MC Whistles";
+        document.getElementById("text3").innerText = "Sat 12 Aug 2023";
+        document.getElementById("text4").innerText = "3-5PM";
+    }
+    
 </script>

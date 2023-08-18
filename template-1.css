@@ -11,11 +11,11 @@
 }
 
 
-#block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #djname, #subtitle, #dateline, #station {
+#block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #text1, #text2, #text3, #text4 {
     position: absolute;
     margin: 0;
     padding: 0;
-    font-family: pragmatica, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: nimbus-sans-bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #block-1 {
@@ -58,89 +58,60 @@
     z-index: 19;
 }
 
-#djname, #subtitle, #dateline, #station {
+#text1, #text2, #text3, #text4 {
     z-index: 100;
 }
 
 #block-1 {
     background: url({{image}}) center center no-repeat #000;
-    /*background: url(img/template1.jpg) center center no-repeat #000; */ 
+    /* background: url(img/template1.jpg) center center no-repeat #000!important; */
     width: 1080px;
-    height: 734px;
-    top:246px;
+    height: 1080px;
+    top:0px;
     left: 0px;
 }
 
 #block-2 {
-    top:0px;
-    left: 0px;
-    height: 246px;
-    width: 1080px;
-    background: #111E1C;
+    background: url(img/t1-wbm.png) center center no-repeat transparent;
+    width: 220px;
+    height: 56px;
+    left: 35px;
+    top: 987px;
 }
 
 #block-3 {
-    top:980px;
-    left: 0px;
-    height: 100px;
-    width: 1080px;
-    background: #111E1C;
-}
-
-#block-4 {
-    background: url(img/t1-oslogos.png) center center no-repeat transparent;
-    width: 184px;
-    height: 61px;
-    left: 711px;
-    top: 996px;
-}
-
-#block-5 {
-    background: url(img/t1-alexa.png) center center no-repeat transparent;
-    width: 160px;
-    height: 57px;
-    left: 903px;
-    top: 999px;
-}
-
-#block-6 {
-    background: url(img/t1-sublogo.png) center center no-repeat transparent;
-    width: 205px;
-    height: 49px;
-    left: 44px;
-    top: 1003px;
+    background: url(img/t1-subicon.png) center center no-repeat transparent;
+    width: 166px;
+    height: 130px;
+    left: 877px;
+    top: 914px;
 }
     
-h1, h2, h3, h4 {
-    color: #DECCC2;
+#text1, #text2, #text3, #text4 {
+    color: #EEEEEE;
+    font-size: 45px;
+    line-height: 1;
+    text-transform: uppercase;
 }
 
-#djname {
-    top: 24px;
+#text1 {
+    top: 26px;
     left: 39px;
-    font-size: 60px;
-    font-weight: 500;
 }
 
-#subtitle {
-    display: none;
+#text2 {
+    top: 74px;
+    left: 34px;
 }
 
-#dateline {
-    top: 200px;
-    left: 43px;
-    font-weight: 200;
-    font-family: nimbus-sans-regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 28px;
+#text3 {
+    top: 26px;
+    left: 671px;
 }
 
-#station {
-    color: #DECCC2;
-    font-size: 27px;
-    font-weight: 200;
-    font-family: nimbus-sans-regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    right: 38px;
-    top: 199px;
+#text4 {
+    left: 671px;
+    top: 76px;
 }
 
 #block-10 {
