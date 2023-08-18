@@ -33,6 +33,36 @@
 		"oAP": "/composer.lock",
 		"oF": 1
 		},
+	"/css/generator.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/css/generator-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/css/materialize.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/css/materialize-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/css/materialize.min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/css/materialize.min-min.css",
+		"oF": 0,
+		"oS": 3
+		},
 	"/djs": {
 		"ft": 65536,
 		"oA": 1,
@@ -43,6 +73,14 @@
 		"ft": 65536,
 		"oA": 1,
 		"oAP": "/build/fonts",
+		"oF": 0
+		},
+	"/generator.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/generator.php",
 		"oF": 0
 		},
 	"/img": {
@@ -58,6 +96,50 @@
 		"oA": 0,
 		"oAP": "/index.php",
 		"oF": 0
+		},
+	"/js/generator-min.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/js/generator-min-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/js/generator.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/js/generator-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/js/materialize.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/js/materialize-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/js/materialize.min.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "/js/materialize.min-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
 		},
 	"/normalize.css": {
 		"aP": 1,
@@ -95,6 +177,19 @@
 		"pME": 1,
 		"rFN": 0,
 		"uCM": 0
+		},
+	"/scss/generator.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/css/generator.css",
+		"oF": 2,
+		"oS": 0,
+		"sct": 0
 		},
 	"/scss/template-1.scss": {
 		"aP": 0,
@@ -168,6 +263,17 @@
 		"oA": 1,
 		"oAP": "/build/vendor",
 		"oF": 0
+		},
+	"/white-circle-black-sub.png": {
+		"ft": 32768,
+		"iS": 73154,
+		"oA": 0,
+		"oAP": "/white-circle-black-sub.png",
+		"oF": 0,
+		"oIPL": 0,
+		"opt": 0,
+		"oT": 1,
+		"q": 100
 		}
 	},
 "hooks": [
@@ -1348,7 +1454,7 @@
 			"optionString": "{'skipBlankLines': false, 'ignoreComments': false}"
 			},
 		"no-undef": {
-			"active": 1,
+			"active": 0,
 			"optionString": "{'typeof': false}"
 			},
 		"no-undef-init": {
@@ -1396,7 +1502,7 @@
 			"optionString": ""
 			},
 		"no-unused-vars": {
-			"active": 1,
+			"active": 0,
 			"optionString": "{'vars': 'all', 'args': 'after-used', 'caughtErrors': 'none', 'ignoreRestSiblings': false}"
 			},
 		"no-use-before-define": {

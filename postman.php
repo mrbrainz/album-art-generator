@@ -10,14 +10,14 @@
 </head>
 <body>
     <form method="post" action="/">
-        <label for="djname">DJ Name:</label>
-        <input type="text" name="djname" value="DJ BrainZ" /><br />
-        <label for="subtitle">Subtitle:</label>
-        <input type="text" name="subtitle" /><br />
-        <label for="dateline">Dateline:</label>
-        <input type="text" name="dateline" value="Saturday x 1500 - 1700" /><br />
-        <label for="station">Station:</label>
-        <input type="text" name="station" value="Sub.fm" /><br />
+        <label for="text-1">DJ Name:</label>
+        <input type="text" name="text-1" value="DJ BrainZ" /><br />
+        <label for="text-2">Subtitle:</label>
+        <input type="text" name="text-2" /><br />
+        <label for="text-3">Dateline:</label>
+        <input type="text" name="text-3" value="Saturday x 1500 - 1700" /><br />
+        <label for="text-4">Station:</label>
+        <input type="text" name="text-4" value="Sub.fm" /><br />
         <label for="image">Base64 Image:</label>
         <textarea name="image"></textarea><br />
         <input type="submit" />
