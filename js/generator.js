@@ -51,7 +51,8 @@ function postFormToServer(formdata,hasImage) {
         if (this.readyState === 4 && this.status === 200)
           if(this.responseText) {
             var image = document.getElementById('art-preview');
-            image.src = this.responseText;
+            var resp = JSON.parse(this.responseText);
+            image.src = resp.img;
           }
     }
 
@@ -59,18 +60,18 @@ function postFormToServer(formdata,hasImage) {
 
     if (hasImage) {
       var image = document.getElementById('converter-img');
-      img = "&image="+encodeURI(image.src);
-      
+      img = image.src;
     }
 
-    var payload ="id=" + formdata.templateid +
-                 "&text1=" + formdata.text1 + 
-                 "&text2=" + formdata.text2 + 
-                 "&text3=" + formdata.text3 + 
-                 "&text4=" + formdata.text4 +
-                 img;
+    var payload = "payload="+encodeURIComponent(JSON.stringify(
+                    {"id": formdata.templateid,
+                     "text1": encodeURIComponent(formdata.text1),
+                     "text2": encodeURIComponent(formdata.text2), 
+                     "text3": encodeURIComponent(formdata.text3), 
+                     "text4": encodeURIComponent(formdata.text4),
+                     "img":   encodeURIComponent(img)
+                   }));
     console.log(payload);
-
     xmlhttp.open("POST","/",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send(payload);

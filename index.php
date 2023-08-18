@@ -16,32 +16,13 @@ function isPost() {
 
 function readPostData() {
     $output = [];
-    if (isset($_POST['text1'])) {
-        $output['text1'] = $_POST['text1'];
-    } else {
-        $output['text1'] = "";
+    if (isset($_POST['payload'])) {
+        $output = json_decode($_POST['payload'], true);
+        foreach($output as $key=>$value) {
+            $output[$key] = urldecode($value);
+        }
     }
-    if (isset($_POST['text2'])) {
-        $output['text2'] = $_POST['text2'];
-    } else {
-        $output['text2'] = "";
-    }
-    if (isset($_POST['text3'])) {
-        $output['text3'] = $_POST['text3'];
-    } else {
-        $output['text3'] = "";
-    }
-    if (isset($_POST['text4'])) {
-        $output['text4'] = $_POST['text4'];
-    } else {
-        $output['text4'] = "";
-    }
-    if (isset($_POST['image']) && is_base64_image($_POST['image'])) {
-        $output['image'] = $_POST['image'];
-    } else {
-        $output['image'] = ""; 
-    }
-    
+
     return $output;
 }
 
@@ -98,6 +79,8 @@ function createStyleSheetFromBase64($id,$blob) {
     $stylesheet .= file_get_contents('template-'.intval($id).'.css');
     
     $blobparts = explode(";base64,",$blob);
+
+    //echo var_dump($blobparts);
     
     if (sizeof($blobparts) == 2) {
     
@@ -231,8 +214,9 @@ function brainzTest() {
 
 function createImageFromPost() {
     $postdata = readPostData();
-    $style = createStyleSheetFromBase64(1,$postdata['image']);
-    // echo var_dump($brainzstyle); exit();
+    //echo var_dump($postdata);
+    $style = createStyleSheetFromBase64(1,$postdata['img']);
+    //echo var_dump($style); exit();
     $arthtml = createArtHTML($postdata['text1'],$postdata['text2'],$postdata['text3'], $postdata['text4']);                      
     $pdfoutput = createPDFBlob($style,$arthtml);
     $art = pdfToBase64($pdfoutput,"jpg");
@@ -241,7 +225,7 @@ function createImageFromPost() {
 
 if (isPost()) {
     header('Status: 200');
-    echo createImageFromPost(); 
+    echo json_encode(['img' => createImageFromPost()]); 
     exit();
 }
 
