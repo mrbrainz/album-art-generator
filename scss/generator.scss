@@ -34,3 +34,27 @@ h3.header {
 h1.header {
 	margin-bottom: 0;
 }
+
+#base64-art {
+	font-family: monospace;
+	max-height: 141px;
+	height: 141px;
+	overflow-y: scroll;
+	resize: none;
+	line-height: normal;
+	padding: 0.8rem 0 0.8rem 0;
+	resize: none;
+	min-height: 3rem;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid #9e9e9e;
+	border-radius: 0;
+	outline: none;
+	width: 100%;
+	font-size: 16px;
+	margin: 0 0 8px 0;
+	box-shadow: none;
+	transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+}

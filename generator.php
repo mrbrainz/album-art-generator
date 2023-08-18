@@ -68,7 +68,7 @@
                         <div class="row">
                             <div id="image-preview"><img id="art-preview" alt="Art Preview" src="img/t1-default.jpg" /></div>
                             <div id="base64-code" class="input-field col s12">
-                                <textarea id="base64-art" class="materialize-textarea"></textarea>
+                                <textarea id="base64-art" rows="10" readonly></textarea>
                                 <span class="helper-text">Base64 Output</span>
                             </div>
                         </div>

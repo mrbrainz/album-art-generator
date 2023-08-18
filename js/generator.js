@@ -19,6 +19,31 @@ function setupButtons() {
     }
 
   });
+
+  document.getElementById('base64-art').addEventListener('click',function(e){
+    e.preventDefault();
+    return false;
+    });
+
+  document.getElementById('copy-base64').addEventListener('click',function(e){
+    e.preventDefault();
+    copyToClipboard();
+    M.toast({html: 'Image Base64 copied to clipboard'});
+    });
+
+
+}
+
+function copyToClipboard() {
+  // Get the text field
+  var copyText = document.getElementById('base64-art');
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
 }
 
 function convertImageToBase64(theimage) {
@@ -55,6 +80,8 @@ function postFormToServer(formdata,hasImage) {
             var image = document.getElementById('art-preview');
             var resp = JSON.parse(this.responseText);
             image.src = resp.img;
+            var textarea = document.getElementById('base64-art');
+            textarea.value = resp.img;
           }
     }
 
