@@ -17,10 +17,11 @@
         </nav>
         <div class="section no-pad-bot" id="index-banner">
             <div class="container">
+                <h1 class="header center black-text">Album Art Generator</h1>
+                <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
                 <br>
-                <h1 class="header center black-text">Album Art Generator By BrainZ</h1>
                 <div class="row">
-                    <form class="col s12 m4" id="djcreds">
+                    <form class="col s12 m6" id="djcreds">
                         <input type="hidden" name="templateid" value="1" />
                         <div class="row">
                             <div class="input-field col s12">
@@ -55,6 +56,7 @@
                               <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text">
                               </div>
+                              <span class="helper-text">JPG & PNG accepted</span>
                             </div>
                         </div>
 
@@ -62,13 +64,17 @@
                         </button>
                         
                     </form>
-                    <div class="col s12 m8" id="prev-col">
-                        <div id="image-preview"><img id="art-preview" alt="Art Preview" src="img/t1-default.jpg" /></div>
-                        <div id="base64-code" class="input-field col s12">
-                            <textarea id="base64-art" class="materialize-textarea"></textarea>
-                            <button class="btn waves-effect waves-light" id="copy-base64">Copy to Clipboard <i class="material-icons right">content_paste_go</i>
-                        </button>                     
+                    <div class="col s12 m6" id="prev-col">
+                        <div class="row">
+                            <div id="image-preview"><img id="art-preview" alt="Art Preview" src="img/t1-default.jpg" /></div>
+                            <div id="base64-code" class="input-field col s12">
+                                <textarea id="base64-art" class="materialize-textarea"></textarea>
+                                <span class="helper-text">Base64 Output</span>
+                            </div>
                         </div>
+                            <button class="btn waves-effect waves-light" id="copy-base64">Copy to Clipboard <i class="material-icons right">content_paste_go</i>
+                            </button>  <button class="btn waves-effect waves-light" id="download">Download <i class="material-icons right">download</i>
+                            </button>      
                     </div>
                 </div>
             </div>

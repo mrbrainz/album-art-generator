@@ -22,3 +22,12 @@
 #converter-img {
   display: none;
 }
+
+h3.header {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+h1.header {
+  margin-bottom: 0;
+}
