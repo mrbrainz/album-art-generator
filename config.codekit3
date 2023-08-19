@@ -273,17 +273,6 @@
 		"oA": 1,
 		"oAP": "/build/vendor",
 		"oF": 0
-		},
-	"/white-circle-black-sub.png": {
-		"ft": 32768,
-		"iS": 73154,
-		"oA": 0,
-		"oAP": "/white-circle-black-sub.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
 		}
 	},
 "hooks": [
