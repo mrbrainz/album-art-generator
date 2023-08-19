@@ -230,8 +230,7 @@ function createImageFromPost() {
 
     $id = (isset($postdata['id'])) ? $postdata['id'] : 1;
     $image = (isset($postdata['img'])) ? $postdata['img'] : false;
-    $style = createStyleSheetFromBase64(1,$image);
-
+    $style = createStyleSheetFromBase64($id,$image);
 
     $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
     $text2 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
