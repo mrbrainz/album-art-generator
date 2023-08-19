@@ -21,7 +21,7 @@
                 <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
                 <br>
                 <div class="row">
-                    <pre style="overflow-x: scroll;">
+                    
 <?php
 
 function createPayload($id=1,$text1="",$text2="",$text3="",$text4="",$img="") {
@@ -40,72 +40,119 @@ function createPayload($id=1,$text1="",$text2="",$text3="",$text4="",$img="") {
     return $payload;
 }
 
-function getAlbumArt($link,$payload) {
+function decodePayload($payload) {
+    $payload = urldecode($payload);
+    $payload = ($payload) ? explode("payload=",$payload) : false;
+    $payload = ($payload) ? json_decode($payload[1]) : false;
+
+    if (!$payload) {
+        return false;
+    }
+
+    $output = [];
+
+    foreach ($payload as $pay => $load) {
+        $output[$pay] = urldecode($load);
+    }
+
+    return $output;
+}
+
+function getAlbumArt($link,$payload, $debug = false) {
     $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, $link);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $link);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-$output = curl_exec($ch);
-$error    = curl_error($ch);
-$errno    = curl_errno($ch);
+    $output = curl_exec($ch);
+    $error    = curl_error($ch);
+    $errno    = curl_errno($ch);
+
+    curl_close($ch);
+
+    if ($output) {
+        $response = json_decode($output);
+    }
 
 
-curl_close($ch);
+    // Return cURL result if debug mode is false AND and image was returned from the server
 
-echo "My server output is:
+    if (!$debug) {
+        return (isset($response) && isset($response->img)) ? $response->img : false;
+    }
+
+    // Following is for Debug output only
+
+    if ($debug) {
+
+        echo"                   <h3>getAlbumArt() Debug Output</h3>
+                  <pre style='overflow-x: scroll;'>
+
+I posted to: ".$link."
+
+My Raw Payload was: 
+
+".$payload."
+
+... which contained:
 
 ";
 
-var_dump($output);
+print_r(decodePayload($payload));
 
 echo "
+
+-----------
+
+The cURL response was:
+
+";
+
+        var_dump($output);
+
+        echo "
 
 Error: ".$error."
-Error no: ".$errno;
+Error no: ".$errno."
 
-if ($output) {
-    $response = json_decode($output);
-}
+---------------    
 
-echo "
 
 Server response JSON processed looks like:
 
 ";
-var_dump($response);
+        print_r($response);
 
-if ($response->img) {
-    ?><img src="<?php echo $response->img; ?>" alt="" /><?php
+        echo "                  </pre>";
+
+        if ($response->img) {
+            ?><h3>Generated Image:</h3><p><img src="<?php echo $response->img; ?>" alt="" /></p><?php
+        }
+    }
+
 }
 
 
-}
 
 $postlink = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/generate.php";
 
 $img = "data:image/jpg;base64, ".base64_encode(file_get_contents("djs/t1-brainz.jpg"));
 
-
 $payload = createPayload(1,"DJ BrainZ","With MC Whistles","Sat 12 Aug 2023","3-5PM", $img);
 
-getAlbumArt($postlink, $payload);
+getAlbumArt($postlink, $payload, true);
 
-echo "
+/* $art = getAlbumArt($postlink, $payload);
 
-I posted to: ".$postlink."
+echo ($art) ? '<p><img src="'.$art.'" alt="" /></p>' : ""; */
 
-My Payload was: 
-
-".$payload."
-
-"; ?>
-</pre>
-</div>
-</div>
-</div>
-</body>
+?>
+                    
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
