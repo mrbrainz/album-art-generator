@@ -1,3 +1,5 @@
+var max_post_size = 8388608;
+
 document.addEventListener('DOMContentLoaded', function() {
   setupButtons();
   });
@@ -12,7 +14,12 @@ function setupButtons() {
     var fd = getFormData(),
     djimage = false;
     //console.log(fd.djimage)
-    if (fd.djimage) {
+    if (fd.djimage.size > 0) {
+      if (fd.djimage.size > max_post_size * 0.66) {
+        M.toast({html: 'ERROR: Please use an image smaller than 5MB'});
+        return false;
+      }
+
       djimage = convertImageToBase64(fd.djimage);
     } else {
       postFormToServer(fd,false);
@@ -39,7 +46,7 @@ function setupButtons() {
       return false;
     } else {
       downloadBase64File(base64, 'albumart.jpg');
-      M.toast({html: 'Download Triggered!'});
+      M.toast({html: 'Download triggered!'});
     }
 
     });
@@ -103,7 +110,7 @@ function postFormToServer(formdata,hasImage) {
             image.src = resp.img;
             var textarea = document.getElementById('base64-art');
             textarea.value = resp.img;
-            unlockForLoading()
+            unlockForLoading();
           }
         }
     }
@@ -114,7 +121,7 @@ function postFormToServer(formdata,hasImage) {
       var image = document.getElementById('converter-img');
       img = image.src;
     }
-
+    //console.log(img.length);
     var payload = "payload="+encodeURIComponent(JSON.stringify(
                     {"id": formdata.templateid,
                      "text1": encodeURIComponent(formdata.text1),
@@ -124,6 +131,14 @@ function postFormToServer(formdata,hasImage) {
                      "img":   encodeURIComponent(img)
                    }));
     //console.log(payload);
+    //console.log(payload.length);
+    
+    if (payload.length > max_post_size) {
+      M.toast({html: 'ERROR: Data transfer too big. Try using a smaller image.'});
+      unlockForLoading();
+      return false;
+    }
+
     xmlhttp.open("POST","/generate.php",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send(payload);
