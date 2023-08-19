@@ -82,8 +82,6 @@ function createStyleSheetFromBase64($id,$blob) {
     
     $blobparts = explode(";base64,",$blob);
 
-    // var_dump($blobparts);
-
     if (sizeof($blobparts) == 2) { 
 
         if(!str_starts_with($blobparts[0],"data:image/")) {
@@ -97,12 +95,12 @@ function createStyleSheetFromBase64($id,$blob) {
         $blob = "img/t".intval($id)."-default.jpg";
     }
         
-    $stylesheet = str_replace("{{image}}", $blob, $stylesheet);
+    $stylesheet = str_replace("{{image}}", '"'.$blob.'"', $stylesheet);
         
     return $stylesheet;
 }
 
-function createPDFBlob($stylesheet,$html) {
+function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     
     // Add config for custom font folder
     $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
@@ -135,11 +133,16 @@ function createPDFBlob($stylesheet,$html) {
             ]
         ]
         ]);
+    
+    //$mpdf->showImageErrors = true;
     $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
     $mpdf->WriteHTML($html,\Mpdf\HTMLParserMode::HTML_BODY);
     
+    if ($outputanddie) {
+        $mpdf->Output('', 'I'); exit();
+    }
+
     return $mpdf->Output('', 'S');
-    //$mpdf->Output('', 'I'); exit();
 }
 
 function createArtHTML($text1 = "", $text2 = "", $text3 = "", $text4 = "") {
@@ -187,7 +190,7 @@ function createArtHTML($text1 = "", $text2 = "", $text3 = "", $text4 = "") {
 }
 
 function pdfToBase64($blob,$format) {
-    if ($format !== "jpg" && $format !== "png") {
+    if ($format !== "jpg" && $format !== "png" && $format !== "jpeg") {
         $format = "jpg";
     }
 
@@ -204,8 +207,16 @@ function pdfToBase64($blob,$format) {
 
 function brainzTest() {
 
-    $brainzstyle = createStyleSheetFromBase64(1,"data:image/jpg;base64,".base64_encode(file_get_contents("djs/t1-brainz.jpg")));
-    // echo var_dump($brainzstyle); exit();
+    $file = "djs/t1-brainz.jpg";
+    $mimetype = mime_content_type($file);
+    //$mimetype = ($mimetype === "image/jpeg") ? "image/jpg" : $mimetype;
+
+    $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
+
+    $brainzstyle = createStyleSheetFromBase64(1,$base64file);
+
+    //var_dump($brainzstyle); exit();
+    
     $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");                      
     $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
     $art = pdfToBase64($pdfoutput,"jpg");
@@ -216,10 +227,18 @@ function brainzTest() {
 
 function createImageFromPost() {
     $postdata = readPostData();
-    // var_dump($postdata);
-    $style = createStyleSheetFromBase64(1,$postdata['img']);
-    // var_dump($style); exit();
-    $arthtml = createArtHTML($postdata['text1'],$postdata['text2'],$postdata['text3'], $postdata['text4']);                      
+
+    $id = (isset($postdata['id'])) ? $postdata['id'] : 1;
+    $image = (isset($postdata['img'])) ? $postdata['img'] : false;
+    $style = createStyleSheetFromBase64(1,$image);
+
+
+    $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
+    $text2 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
+    $text3 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
+    $text4 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
+
+    $arthtml = createArtHTML($text1,$text2,$text3,$text4);
     $pdfoutput = createPDFBlob($style,$arthtml);
     $art = pdfToBase64($pdfoutput,"jpg");
     return $art;

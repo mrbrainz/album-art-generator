@@ -15,8 +15,8 @@ function setupButtons() {
     djimage = false;
     //console.log(fd.djimage)
     if (fd.djimage.size > 0) {
-      if (fd.djimage.size > max_post_size * 0.66) {
-        M.toast({html: 'ERROR: Please use an image smaller than 5MB'});
+      if (fd.djimage.size > 745373) {
+        M.toast({html: 'ERROR: Please use an image smaller than 745kb'});
         return false;
       }
 
