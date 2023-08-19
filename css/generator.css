@@ -55,3 +55,23 @@ h1.header {
   box-shadow: none;
   transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
 }
+
+#image-preview {
+  position: relative;
+}
+
+#throbber {
+  display: none;
+  height: 300px;
+  max-height: 300px;
+  width: 100%;
+  max-width: 300px;
+  background: url(../img/loading.gif) center center no-repeat rgba(235, 235, 235, 0.8);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+body.loading #throbber {
+  display: block;
+}

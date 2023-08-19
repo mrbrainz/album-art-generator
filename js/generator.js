@@ -90,18 +90,22 @@ function getFormData() {
 }
 
 function postFormToServer(formdata,hasImage) {
+    lockForLoading();
+
     let xmlhttp= window.XMLHttpRequest ?
     new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 
     xmlhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200)
+        if (this.readyState === 4 && this.status === 200) {
           if(this.responseText) {
             var image = document.getElementById('art-preview');
             var resp = JSON.parse(this.responseText);
             image.src = resp.img;
             var textarea = document.getElementById('base64-art');
             textarea.value = resp.img;
+            unlockForLoading()
           }
+        }
     }
 
     var img = "";
@@ -133,6 +137,51 @@ function downloadBase64File(base64Data, fileName) {
   downloadLink.click();
   downloadLink.remove();
 }
- 
+
+function lockForLoading() {
+  document.getElementsByTagName('body')[0].classList.add('loading');
+  
+  var buttons = document.getElementsByTagName('button');
+  
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].disabled = true;
+  }
+
+  var inputs = document.getElementsByTagName('input');
+  
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].disabled = true;
+  }
+
+  var buttonsclass = document.getElementsByClassName("btn");
+
+  for (let i = 0; i < buttonsclass.length; i++) {
+    buttonsclass[i].classList.add('disabled');
+  }
+
+}
+
+function unlockForLoading() {
+  document.getElementsByTagName('body')[0].classList.remove('loading');
+
+  var buttons = document.getElementsByTagName('button');
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].removeAttribute('disabled');
+  }
+
+  var inputs = document.getElementsByTagName('input');
+  
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].removeAttribute('disabled');
+  }
+
+  var buttonsclass = document.getElementsByClassName("btn");
+
+  for (let i = 0; i < buttonsclass.length; i++) {
+    buttonsclass[i].classList.remove('disabled');
+  }
+
+}
 
 
