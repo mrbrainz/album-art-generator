@@ -233,9 +233,9 @@ function createImageFromPost() {
     $style = createStyleSheetFromBase64($id,$image);
 
     $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
-    $text2 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
-    $text3 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
-    $text4 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
+    $text2 = (isset($postdata['text2'])) ? $postdata['text2'] : "";
+    $text3 = (isset($postdata['text3'])) ? $postdata['text3'] : "";
+    $text4 = (isset($postdata['text4'])) ? $postdata['text4'] : "";
 
     $arthtml = createArtHTML($text1,$text2,$text3,$text4);
     $pdfoutput = createPDFBlob($style,$arthtml);
