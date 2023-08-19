@@ -139,7 +139,11 @@ Server response JSON processed looks like:
 
 $postlink = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/generate.php";
 
-$img = "data:image/jpg;base64, ".base64_encode(file_get_contents("djs/t1-brainz.jpg"));
+$file = "djs/t1-brainz.jpg";
+
+$mimetype = mime_content_type($file);
+
+$img = "data:".$mimetype.";base64, ".base64_encode(file_get_contents($file));
 
 $payload = createPayload(1,"DJ BrainZ","With MC Whistles","Sat 12 Aug 2023","3-5PM", $img);
 
