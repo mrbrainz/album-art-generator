@@ -7,8 +7,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 function isPost() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
-          $this->output->set_status_header(400, 'No Remote Access Allowed');
-          exit; //just for good measure
+          http_response_code(400);
+          exit;
         }
         return true;
     }
@@ -244,8 +244,13 @@ function createImageFromPost() {
 }
 
 if (isPost()) {
-    header('Status: 200');
-    echo json_encode(['img' => createImageFromPost()]); 
+    http_response_code(200);
+    try {
+        echo json_encode(['img' => createImageFromPost()]); 
+    } catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+        http_response_code(400);
+    }
     exit();
 }
 
