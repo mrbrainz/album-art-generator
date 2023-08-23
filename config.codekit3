@@ -74,13 +74,13 @@
 	"/djs": {
 		"ft": 65536,
 		"oA": 1,
-		"oAP": "/build/djs",
+		"oAP": "/djs",
 		"oF": 0
 		},
 	"/fonts": {
 		"ft": 65536,
 		"oA": 1,
-		"oAP": "/build/fonts",
+		"oAP": "/fonts",
 		"oF": 0
 		},
 	"/generate.php": {
@@ -94,7 +94,7 @@
 	"/img": {
 		"ft": 65536,
 		"oA": 1,
-		"oAP": "/build/img",
+		"oAP": "/img",
 		"oF": 0
 		},
 	"/index.php": {
@@ -271,7 +271,7 @@
 	"/vendor": {
 		"ft": 65536,
 		"oA": 1,
-		"oAP": "/build/vendor",
+		"oAP": "/vendor",
 		"oF": 0
 		}
 	},
@@ -2380,7 +2380,7 @@
 		"moduleResolutionType": 0,
 		"moduleType": 2,
 		"removeComments": 0,
-		"targetECMAVersion": 0
+		"targetECMAVersion": 2018
 		},
 	"languageDefaultsUserDefined": [
 		],
@@ -2463,7 +2463,7 @@
 			},
 		"comments": {
 			"active": 0,
-			"flagValue": -1
+			"flagValue": 1
 			},
 		"comparisons": {
 			"active": 1,
@@ -2565,6 +2565,10 @@
 			"active": 0,
 			"flagValue": -1
 			},
+		"keep_numbers": {
+			"active": false,
+			"flagValue": -1
+			},
 		"keep_quoted_props": {
 			"active": 0,
 			"flagValue": -1
@@ -2588,6 +2592,10 @@
 		"passes": {
 			"active": 1,
 			"flagValue": 1
+			},
+		"preserve_annotations": {
+			"active": false,
+			"flagValue": -1
 			},
 		"properties": {
 			"active": 1,
@@ -2691,6 +2699,10 @@
 			},
 		"webkit": {
 			"active": 0,
+			"flagValue": -1
+			},
+		"wrap_func_args": {
+			"active": true,
 			"flagValue": -1
 			},
 		"wrap_iife": {

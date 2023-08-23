@@ -6,12 +6,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 function isPost() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
+      return true;
+    }
+        /* if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
           http_response_code(400);
           exit;
         }
-        return true;
-    }
+        return true; */
+    
     return false;
 }
 
