@@ -24,6 +24,8 @@
                     
 <?php
 
+// TODO Payload with local file storage
+
 function createPayload($id=1,$text1="",$text2="",$text3="",$text4="",$img="") {
 
     $payloaddata = [
@@ -135,9 +137,12 @@ Server response JSON processed looks like:
 
 }
 
+$url_components = parse_url($_SERVER['REQUEST_URI']);
 
 
-$postlink = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/generate.php";
+$path = str_replace("curlexample.php","generate.php" , $url_components["path"]);
+
+$postlink = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://'.$_SERVER[HTTP_HOST]. $path; 
 
 $file = "djs/t1-brainz.jpg";
 
