@@ -1,70 +1,15 @@
 <?php
 
-ini_set("display_errors", "1");
-error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+require_once "config.php";
+
+if (getOption('debug')) {
+    ini_set("display_errors", "1");
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
 
 $startTime = microtime(true);  
+}
 
 require_once __DIR__ . '/vendor/autoload.php';
-
-function isPost() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      return true;
-    }
-        /* if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
-          http_response_code(400);
-          exit;
-        }
-        return true; */
-    
-    return false;
-}
-
-function readPostData() {
-
-    $output = [];
-    if (isset($_POST['payload'])) {
-        $output = json_decode($_POST['payload'], true);
-        // var_dump($output);
-        foreach($output as $key=>$value) {
-            $output[$key] = urldecode($value);
-        }
-    }
-
-    return $output;
-}
-
-function sanitiseFilename($file) {
-    // Remove anything which isn't a word, whitespace, number
-    // or any of the following caracters -_~,;[]().
-    $file = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $file);
-    // Remove any runs of periods
-    $file = mb_ereg_replace("([\.]{2,})", '', $file);
-    
-    return $file;
-}
-
- function is_base64($s) {
-      return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
-}
-
- function is_base64_image($s) {
-     $s = explode(";base64,",$s);
-    
-    if (sizeof($s) == 2) {
-    
-        if(substr( $blobparts[0], 0, 11 ) != "data:image/") {
-            return false;
-        }  
-
-        if (!is_base64($blobparts[1])) {
-            return false;
-        }
-    } else {
-        return false;
-    }
-    return true;
- }
 
 function createStylesheetFromLocal($id,$imagefile) {
     $stylesheet = file_get_contents('normalize.css');
@@ -301,8 +246,10 @@ if (isPost()) {
 
 <?php 
 
-$endTime = microtime(true);  
+if (getOption('debug')) {
+    $endTime = microtime(true);  
     $elapsed = $endTime - $startTime;
     echo "<!-- Execution time : $elapsed seconds -->";
+}
 
 exit();

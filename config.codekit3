@@ -41,6 +41,22 @@
 		"oAP": "/composer.lock",
 		"oF": 1
 		},
+	"/config.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/config.php",
+		"oF": 0
+		},
+	"/corefunctions.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/corefunctions.php",
+		"oF": 0
+		},
 	"/css/generator.css": {
 		"aP": 1,
 		"bl": 0,
