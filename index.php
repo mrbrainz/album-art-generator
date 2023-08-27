@@ -1,4 +1,10 @@
-<?php require_once "config.php"; ?>
+<?php require_once "config.php"; 
+
+if (getOption('debug')) {
+    ini_set("display_errors", "1");
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
