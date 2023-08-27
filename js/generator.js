@@ -139,7 +139,7 @@ function postFormToServer(formdata,hasImage) {
       return false;
     }
 
-    xmlhttp.open("POST","/generate.php",true);
+    xmlhttp.open("POST","generate.php",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send(payload);
 }
