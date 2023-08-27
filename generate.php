@@ -44,8 +44,6 @@ function createStyleSheetFromLocal($id = 1,$file = "") {
     $stylesheet = file_get_contents('normalize.css');
     $stylesheet .= file_get_contents('template-'.$id.'.css');
 
-    //var_dump($file); exit();
-
     if (!file_exists($file)) { 
             $file = "img/t".$id."-default.jpg";
         } 
@@ -220,8 +218,12 @@ function createImageFromPost() {
     //var_dump($file); exit();
     
     if (getOption('localimgpdf') && $file) {
-        $filename = storeTempImage($file);
-        $style = createStyleSheetFromLocal($id,"tmp/".$filename);
+        $filename = "tmp/".storeTempImage($file);
+        if (file_exists($filename)) {
+            $style = createStyleSheetFromLocal($id,$filename);
+        } else {
+            $style = createStyleSheetFromBase64($id,$image);
+        }
     } else {
         $style = createStyleSheetFromBase64($id,$image);
     }
@@ -235,6 +237,11 @@ function createImageFromPost() {
 
     $arthtml = createArtHTML($text1,$text2,$text3,$text4);
     $pdfoutput = createPDFBlob($style,$arthtml);
+    if (getOption('localimgpdf') && $file) {
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
+    }
     $art = pdfToBase64($pdfoutput,"jpg");
     return $art;
 }
