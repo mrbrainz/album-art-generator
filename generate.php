@@ -25,9 +25,6 @@ function createStyleSheetFromBase64($id,$blob) {
             $blob = "img/t".intval($id)."-default.jpg";
         }  
 
-        /* if (!is_base64($blobparts[1])) {
-            $blob = "img/t".intval($id)."-default.jpg";
-        }*/
     } else {
         $blob = "img/t".intval($id)."-default.jpg";
     }
@@ -60,7 +57,9 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     $fontDirs = $defaultConfig['fontDir'];
 
     $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
-    $fontData = $defaultFontConfig['fontdata'];
+    $fontData = $defaultFontConfig['fontdata']; 
+
+    //print_r($fontData); exit;
 
     $mpdf = new \Mpdf\Mpdf([
         'tempDir' => __DIR__."/tmp",
@@ -79,11 +78,9 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
                 'R' => 'NimbusSansNovusT-UltraLight.ttf'
             ]
             ,
-            'nimbus-sans-regular' => [
-                'R' => 'NimbusSanL-Reg.ttf'
-            ],
-            'nimbus-sans-bold' => [
-                'R' => 'NimbusSanL-Bol.ttf'
+            'nimbus-sans' => [
+                'R' => 'NimbusSanL-Reg.ttf',
+                'B' => 'NimbusSanL-Bol.ttf'
             ]
         ]
         ]);
@@ -95,6 +92,7 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     
     if ($outputanddie) {
         $mpdf->Output('', 'I'); exit();
+        //$mpdf->Output('tmp/temp.pdf', 'F'); exit();
     }
 
     return $mpdf->Output('', 'S');
@@ -180,28 +178,6 @@ function pdfToTempImage($path,$format) {
 
 }
 
-function brainzTest() {
-
-    $file = "djs/t1-brainz.jpg";
-
-    if (getOption('localimgpdf')) {
-        $brainzstyle = createStyleSheetFromLocal(1,$file);
-    } else {
-        $mimetype = mime_content_type($file);
-        $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
-        $brainzstyle = createStyleSheetFromBase64(1,$base64file);
-    }
-    
-    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");
-
-    $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
-
-    $art = pdfToBase64($pdfoutput,"jpg");
-
-    return $art;
-
-}
-
 function storeTempImage($file) {
     $tempfolder = __DIR__."/tmp";
     move_uploaded_file($file['tmp_name'], $tempfolder."/".$file['name']);
@@ -257,6 +233,28 @@ if (isPost()) {
         http_response_code(400);
     }
     exit();
+}
+
+function brainzTest() {
+
+    $file = "djs/t1-brainz.jpg";
+
+    if (getOption('localimgpdf')) {
+        $brainzstyle = createStyleSheetFromLocal(1,$file);
+    } else {
+        $mimetype = mime_content_type($file);
+        $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
+        $brainzstyle = createStyleSheetFromBase64(1,$base64file);
+    }
+    
+    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");
+
+    $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
+
+    $art = pdfToBase64($pdfoutput,"jpg");
+
+    return $art;
+
 }
 
 ?>
