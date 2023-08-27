@@ -11,7 +11,7 @@ require_once "corefunctions.php";
 
 
 // Show PHP error messages
-setOption("debug",true);
+setOption("debug",false);
 
 // Show Base64 copy/paste options
 setOption("base64web",false);
