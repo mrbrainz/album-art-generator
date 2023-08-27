@@ -247,7 +247,7 @@ function brainzTest() {
     //var_dump($brainzstyle); exit();
     
     $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");                      
-    $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
+    $pdfoutput = createPDFBlob($brainzstyle,$arthtml,true);
     $art = pdfToBase64($pdfoutput,"jpg");
     //$art = "performance";
     return $art;
