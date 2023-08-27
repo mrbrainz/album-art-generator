@@ -29,11 +29,11 @@ function isPost() {
 }
 
 function readPostData() {
-
+	
     $output = [];
     if (isset($_POST['payload'])) {
-        $output = json_decode($_POST['payload'], true);
-        // var_dump($output);
+    	
+        $output = json_decode(urldecode($_POST['payload']), true);
         foreach($output as $key=>$value) {
             $output[$key] = urldecode($value);
         }
