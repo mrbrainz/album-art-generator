@@ -292,53 +292,11 @@
 		"oAP": "/template.html",
 		"oF": 0
 		},
-	"/tmp/ttfontdata/dejavuserifcondensed.cw.dat": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/tmp/ttfontdata/dejavuserifcondensed.cw.dat",
-		"oF": 0
-		},
-	"/tmp/ttfontdata/dejavuserifcondensed.gid.dat": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/tmp/ttfontdata/dejavuserifcondensed.gid.dat",
-		"oF": 0
-		},
-	"/tmp/ttfontdata/dejavuserifcondensed.mtx.json": {
-		"ft": 524288,
+	"/tmp": {
+		"ft": 65536,
 		"oA": 1,
-		"oAP": "/tmp/ttfontdata/dejavuserifcondensed.mtx-min.json",
-		"oF": 0,
-		"oO": 0,
-		"oS": 1
-		},
-	"/tmp/ttfontdata/nimbus-sans-bold.cw.dat": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/tmp/ttfontdata/nimbus-sans-bold.cw.dat",
+		"oAP": "/build/tmp",
 		"oF": 0
-		},
-	"/tmp/ttfontdata/nimbus-sans-bold.gid.dat": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/tmp/ttfontdata/nimbus-sans-bold.gid.dat",
-		"oF": 0
-		},
-	"/tmp/ttfontdata/nimbus-sans-bold.mtx.json": {
-		"ft": 524288,
-		"oA": 1,
-		"oAP": "/tmp/ttfontdata/nimbus-sans-bold.mtx-min.json",
-		"oF": 0,
-		"oO": 0,
-		"oS": 1
 		},
 	"/vendor": {
 		"ft": 65536,
@@ -2466,7 +2424,7 @@
 	"rollupExternals": "",
 	"rollupReplacements": "process.env.NODE_ENV:::$NODE_ENV,,,ENVIRONMENT:::$NODE_ENV",
 	"rollupTreeshakingEnabled": 1,
-	"skippedFoldersString": "log, _logs, logs, _cache, cache, .idea, /storage/framework/sessions, node_modules, /vendor, /fonts, /djs, /img",
+	"skippedFoldersString": "log, _logs, logs, _cache, cache, .idea, /storage/framework/sessions, node_modules, /vendor, /fonts, /djs, /img, /tmp",
 	"sourceFolderName": "source",
 	"susyVersion": 3,
 	"tsAllowSyntheticDefaultImports": 0,

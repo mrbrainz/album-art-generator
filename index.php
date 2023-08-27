@@ -14,7 +14,7 @@ if (getOption('debug')) {
         <link href="css/generator.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
-    <body<?php echo (!getOption("base64web")) ? ' class="nobase64"' : ''; ?>>
+    <body class="<?php echo (!getOption("base64web")) ? 'nobase64 ' : ''; ?><?php echo (getOption("localimgpdf")) ? 'localimgpdf ' : ''; ?>loaded">
         <nav class="grey darken-4" role="navigation">
             <div class="nav-wrapper container">
                 <a id="logo-container" href="https://sub.fm" class="brand-logo">
@@ -28,7 +28,7 @@ if (getOption('debug')) {
                 <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
                 <br>
                 <div class="row">
-                    <form class="col s12 m6" id="djcreds">
+                    <form class="col s12 m6" id="djcreds"<?php echo (getOption("localimgpdf")) ? '  enctype="multipart/form-data"' : ""; ?>>
                         <input type="hidden" name="templateid" value="1" />
                         <div class="row">
                             <div class="input-field col s12">
@@ -113,6 +113,11 @@ if (getOption('debug')) {
             </div>
         </footer>
         <script src="js/materialize.min.js"></script>
+        <script type="text/javascript">
+            
+            <?php echo (getOption("localimgpdf")) ? 'let localimgpdf = true;' : 'let localimgpdf = false;' ?>
+
+        </script>
         <script src="js/generator.js"></script>
     </body>
 </html>

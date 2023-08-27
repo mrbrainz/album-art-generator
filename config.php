@@ -15,3 +15,6 @@ setOption("debug",true);
 
 // Show Base64 copy/paste options
 setOption("base64web",false);
+
+// Store images locally for PDF generation; If false, will use Base64
+setOption("localimgpdf", true);

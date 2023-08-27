@@ -11,21 +11,6 @@ $startTime = microtime(true);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-function createStylesheetFromLocal($id,$imagefile) {
-    $stylesheet = file_get_contents('normalize.css');
-    $stylesheet .= file_get_contents('template-'.intval($id).'.css');
-    $imagefile = sanitiseFilename($imagefile);
-    if (file_exists("djs/".$imagefile)) {
-        $imagefile = "djs/".$imagefile;
-    } else {
-        $imagefile = "img/t".intval($id)."-default.jpg";
-    }
-        
-    $stylesheet = str_replace("{{image}}", $imagefile, $stylesheet);
-        
-    return $stylesheet;
-}
-
 function createStyleSheetFromBase64($id,$blob) {
     $stylesheet = file_get_contents('normalize.css');
     $stylesheet .= file_get_contents('template-'.intval($id).'.css');
@@ -50,6 +35,24 @@ function createStyleSheetFromBase64($id,$blob) {
     $stylesheet = str_replace("{{image}}", '"'.$blob.'"', $stylesheet);
         
     return $stylesheet;
+}
+
+
+function createStyleSheetFromLocal($id = 1,$file = "") {
+
+    $id = intval($id);
+    $stylesheet = file_get_contents('normalize.css');
+    $stylesheet .= file_get_contents('template-'.$id.'.css');
+
+    //var_dump($file); exit();
+
+    if (!file_exists($file)) { 
+            $file = "img/t".$id."-default.jpg";
+        } 
+        
+    $stylesheet = str_replace("{{image}}", '"'.$file.'"', $stylesheet);
+    return $stylesheet;
+
 }
 
 function createPDFBlob($stylesheet,$html,$outputanddie = false) {
@@ -182,21 +185,29 @@ function pdfToTempImage($path,$format) {
 function brainzTest() {
 
     $file = "djs/t1-brainz.jpg";
-    $mimetype = mime_content_type($file);
-    //$mimetype = ($mimetype === "image/jpeg") ? "image/jpg" : $mimetype;
 
-    $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
-
-    $brainzstyle = createStyleSheetFromBase64(1,$base64file);
-
-    //var_dump($brainzstyle); exit();
+    if (getOption('localimgpdf')) {
+        $brainzstyle = createStyleSheetFromLocal(1,$file);
+    } else {
+        $mimetype = mime_content_type($file);
+        $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
+        $brainzstyle = createStyleSheetFromBase64(1,$base64file);
+    }
     
-    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");                      
+    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");
+
     $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
+
     $art = pdfToBase64($pdfoutput,"jpg");
-    //$art = "performance";
+
     return $art;
 
+}
+
+function storeTempImage($file) {
+    $tempfolder = __DIR__."/tmp";
+    move_uploaded_file($file['tmp_name'], $tempfolder."/".$file['name']);
+    return $file['name'];
 }
 
 function createImageFromPost() {
@@ -204,7 +215,18 @@ function createImageFromPost() {
 
     $id = (isset($postdata['id'])) ? $postdata['id'] : 1;
     $image = (isset($postdata['img'])) ? $postdata['img'] : false;
-    $style = createStyleSheetFromBase64($id,$image);
+    $file = (isset($postdata['imgfile'])) ? $postdata['imgfile'] : false;
+
+    //var_dump($file); exit();
+    
+    if (getOption('localimgpdf') && $file) {
+        $filename = storeTempImage($file);
+        $style = createStyleSheetFromLocal($id,"tmp/".$filename);
+    } else {
+        $style = createStyleSheetFromBase64($id,$image);
+    }
+
+    
 
     $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
     $text2 = (isset($postdata['text2'])) ? $postdata['text2'] : "";
@@ -216,6 +238,8 @@ function createImageFromPost() {
     $art = pdfToBase64($pdfoutput,"jpg");
     return $art;
 }
+
+
 
 if (isPost()) {
     http_response_code(200);

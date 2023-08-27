@@ -39,6 +39,12 @@ function readPostData() {
         }
     }
 
+    if (isset($_FILES['file'])) {
+    	$output['imgfile'] = $_FILES['file'];
+    } else {
+    	$output['imgfile'] = false;
+    }
+
     return $output;
 }
 

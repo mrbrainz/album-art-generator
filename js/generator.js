@@ -10,20 +10,8 @@ function setupButtons() {
   document.getElementById('artsubmit').addEventListener('click',function(e){
     e.preventDefault();
     
-
-    var fd = getFormData(),
-    djimage = false;
-    //console.log(fd.djimage)
-    if (fd.djimage.size > 0) {
-      if (fd.djimage.size > 745373) {
-        M.toast({html: 'ERROR: Please use an image smaller than 745kb'});
-        return false;
-      }
-
-      djimage = convertImageToBase64(fd.djimage);
-    } else {
-      postFormToServer(fd,false);
-    }
+    doPost();
+    
 
   });
 
@@ -54,6 +42,52 @@ function setupButtons() {
 
 
 }
+
+function isLocalImgPDF() {
+  return (document.getElementsByTagName('body')[0].classList.contains("localimgpdf"));
+}
+
+function doPostBase64() {
+  var fd = getFormData(),
+  djimage = false;
+  //console.log(fd.djimage)
+  if (fd.djimage.size > 0) {
+    if (fd.djimage.size > 745373) {
+      M.toast({html: 'ERROR: Please use an image smaller than 745kb'});
+      return false;
+    }
+
+    djimage = convertImageToBase64(fd.djimage);
+  } else {
+    postFormToServer(fd,false);
+  }
+}
+
+function doPostFileUpload() {
+  var fd = getFormData(),
+  djimage = false;
+  //console.log(fd.djimage)
+  if (fd.djimage.size > 0) {
+    if (fd.djimage.size > 2000000) {
+      M.toast({html: 'ERROR: Please use an image smaller than 2MB'});
+      return false;
+    }
+
+    postFormToServer(fd,true);
+
+  } else {
+    postFormToServer(fd,false);
+  }
+}
+
+function doPost() {
+  if (typeof(localimgpdf) !== 'undefined' && localimgpdf) {
+    doPostFileUpload();
+  } else { 
+    doPostBase64();
+  }
+}
+
 
 function copyToClipboard() {
   // Get the text field
@@ -99,6 +133,8 @@ function getFormData() {
 function postFormToServer(formdata,hasImage) {
     lockForLoading();
 
+    var localimgpdf = isLocalImgPDF();
+
     let xmlhttp= window.XMLHttpRequest ?
     new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 
@@ -116,13 +152,17 @@ function postFormToServer(formdata,hasImage) {
     }
 
     var img = "";
+    var imgfile = false;
 
-    if (hasImage) {
+    if (hasImage && !localimgpdf) {
       var image = document.getElementById('converter-img');
       img = image.src;
+    } else if (hasImage && localimgpdf) {
+      imgfile = document.getElementById("djimage").files[0];
     }
+
     //console.log(img.length);
-    var payload = "payload="+encodeURIComponent(JSON.stringify(
+    var payload = encodeURIComponent(JSON.stringify(
                     {"id": formdata.templateid,
                      "text1": encodeURIComponent(formdata.text1),
                      "text2": encodeURIComponent(formdata.text2), 
@@ -130,7 +170,20 @@ function postFormToServer(formdata,hasImage) {
                      "text4": encodeURIComponent(formdata.text4),
                      "img":   encodeURIComponent(img)
                    }));
-    //console.log(payload);
+    var formData = new FormData();
+
+    formData.append("payload",payload);
+
+    if (imgfile) {
+      formData.append("file",imgfile);
+    }
+
+    // Display the key/value pairs
+    /* 
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    } */
+
     //console.log(payload.length);
     
     if (payload.length > max_post_size) {
@@ -140,8 +193,7 @@ function postFormToServer(formdata,hasImage) {
     }
 
     xmlhttp.open("POST","generate.php",true);
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send(payload);
+    xmlhttp.send(formData);
 }
 
 function downloadBase64File(base64Data, fileName) {
