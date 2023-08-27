@@ -190,13 +190,15 @@ body {
 }
 
 #block-1 {
-  background: url({{image}}) center center no-repeat #000;
-  /* background: url(img/template1.jpg) center center no-repeat #000!important; */
+  background-image: url({{image}});
+  background-repeat: no-repeat;
+  background-color: #000;
   width: 1080px;
   height: 1080px;
   top: 0px;
   left: 0px;
-  background-size: cover;
+  background-size: contain;
+  background-position: center center;
 }
 
 #block-2 {

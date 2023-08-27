@@ -202,16 +202,6 @@
 		"rFN": 0,
 		"uCM": 0
 		},
-	"/scss/generator.css": {
-		"aP": 1,
-		"bl": 0,
-		"ft": 16,
-		"ma": 0,
-		"oA": 0,
-		"oAP": "/scss/generator-min.css",
-		"oF": 0,
-		"oS": 3
-		},
 	"/scss/generator.scss": {
 		"aP": 0,
 		"bl": 0,

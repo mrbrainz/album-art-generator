@@ -68,8 +68,8 @@ function doPostFileUpload() {
   djimage = false;
   //console.log(fd.djimage)
   if (fd.djimage.size > 0) {
-    if (fd.djimage.size > 2000000) {
-      M.toast({html: 'ERROR: Please use an image smaller than 2MB'});
+    if (fd.djimage.size > 6000000) {
+      M.toast({html: 'ERROR: Please use an image smaller than 6MB'});
       return false;
     }
 
