@@ -17,6 +17,14 @@
 		"oAP": "/.gitattributes",
 		"oF": 1
 		},
+	"/.gitignore": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/.gitignore",
+		"oF": 0
+		},
 	"/composer.json": {
 		"ft": 524288,
 		"oA": 1,
@@ -267,6 +275,54 @@
 		"oA": 0,
 		"oAP": "/template.html",
 		"oF": 0
+		},
+	"/tmp/ttfontdata/dejavuserifcondensed.cw.dat": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/tmp/ttfontdata/dejavuserifcondensed.cw.dat",
+		"oF": 0
+		},
+	"/tmp/ttfontdata/dejavuserifcondensed.gid.dat": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/tmp/ttfontdata/dejavuserifcondensed.gid.dat",
+		"oF": 0
+		},
+	"/tmp/ttfontdata/dejavuserifcondensed.mtx.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/tmp/ttfontdata/dejavuserifcondensed.mtx-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"/tmp/ttfontdata/nimbus-sans-bold.cw.dat": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/tmp/ttfontdata/nimbus-sans-bold.cw.dat",
+		"oF": 0
+		},
+	"/tmp/ttfontdata/nimbus-sans-bold.gid.dat": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/tmp/ttfontdata/nimbus-sans-bold.gid.dat",
+		"oF": 0
+		},
+	"/tmp/ttfontdata/nimbus-sans-bold.mtx.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/tmp/ttfontdata/nimbus-sans-bold.mtx-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
 		},
 	"/vendor": {
 		"ft": 65536,

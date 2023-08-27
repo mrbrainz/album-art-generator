@@ -18,11 +18,9 @@ class ComposerStaticInitee2b4bc52b5dbb5651da5e481a9db5b8
         'P' => 
         array (
             'Psr\\Log\\' => 8,
-            'Psr\\Http\\Message\\' => 17,
         ),
         'M' => 
         array (
-            'Mpdf\\PsrLogAwareTrait\\' => 22,
             'Mpdf\\' => 5,
         ),
         'D' => 
@@ -38,15 +36,7 @@ class ComposerStaticInitee2b4bc52b5dbb5651da5e481a9db5b8
         ),
         'Psr\\Log\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/log/src',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-        ),
-        'Mpdf\\PsrLogAwareTrait\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/mpdf/psr-log-aware-trait/src',
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
         'Mpdf\\' => 
         array (

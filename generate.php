@@ -1,5 +1,8 @@
 <?php
 
+ini_set("display_errors", "1");
+error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+
 $startTime = microtime(true);  
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -50,7 +53,7 @@ function sanitiseFilename($file) {
     
     if (sizeof($s) == 2) {
     
-        if(!str_starts_with($s[0],"data:image/")) {
+        if(substr( $blobparts[0], 0, 11 ) != "data:image/") {
             return false;
         }  
 
@@ -86,7 +89,9 @@ function createStyleSheetFromBase64($id,$blob) {
 
     if (sizeof($blobparts) == 2) { 
 
-        if(!str_starts_with($blobparts[0],"data:image/")) {
+
+        if(substr( $blobparts[0], 0, 11 ) != "data:image/") {
+            echo substr( $blobparts[0], 0, 11 );
             $blob = "img/t".intval($id)."-default.jpg";
         }  
 
@@ -112,6 +117,7 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     $fontData = $defaultFontConfig['fontdata'];
 
     $mpdf = new \Mpdf\Mpdf([
+        'tempDir' => __DIR__."/tmp",
         'mode' => 'utf-8', 
         'dpi' => 72,
         'img_dpi' => 72,
@@ -137,6 +143,7 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
         ]);
     
     //$mpdf->showImageErrors = true;
+    $mpdf->simpleTables = true;
     $mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
     $mpdf->WriteHTML($html,\Mpdf\HTMLParserMode::HTML_BODY);
     
@@ -145,6 +152,12 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     }
 
     return $mpdf->Output('', 'S');
+
+    // $filename = $mpdf->tempDir.'/'.'djpic-'.time().'-'.rand(0,99999).'.pdf';
+
+    //$mpdf->Output($filename, 'F');
+
+    // return $filename;
 }
 
 function createArtHTML($text1 = "", $text2 = "", $text3 = "", $text4 = "") {
@@ -205,6 +218,20 @@ function pdfToBase64($blob,$format) {
     
     return $imageBase64;
     
+}
+
+function pdfToTempImage($path,$format) {
+
+    if ($format !== "jpg" && $format !== "png" && $format !== "jpeg") {
+        $format = "jpeg";
+    }
+
+    if ($format === "jpg") {
+        $format = "jpeg";
+    }
+
+
+
 }
 
 function brainzTest() {
