@@ -187,6 +187,8 @@ body {
 
 #block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #text1, #text2, #text3, #text4 {
   font-family: nimbus-sans-bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-outline: none;
+  text-outline-width: 0;
 }
 
 #block-1 {
