@@ -180,8 +180,10 @@ function pdfToTempImage($path,$format) {
 
 function storeTempImage($file) {
     $tempfolder = __DIR__."/tmp";
-    move_uploaded_file($file['tmp_name'], $tempfolder."/".$file['name']);
-    return $file['name'];
+    $path_info = pathinfo($file['name']);
+    $filename = 'djpic-'.time().'-'.rand(0,99999).'.'.$path_info['extension'];
+    move_uploaded_file($file['tmp_name'], $tempfolder."/".$filename);
+    return $filename;
 }
 
 function createImageFromPost() {
@@ -213,7 +215,7 @@ function createImageFromPost() {
 
     $arthtml = createArtHTML($text1,$text2,$text3,$text4);
     $pdfoutput = createPDFBlob($style,$arthtml);
-    if (getOption('localimgpdf') && $file) {
+    if (getOption('localimgpdf') && $file && !getOption("retainfileupload")) {
         if (file_exists($filename)) {
             unlink($filename);
         }

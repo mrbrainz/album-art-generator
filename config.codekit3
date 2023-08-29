@@ -2585,6 +2585,10 @@
 			"active": 0,
 			"flagValue": -1
 			},
+		"keep_numbers": {
+			"active": false,
+			"flagValue": -1
+			},
 		"keep_quoted_props": {
 			"active": 0,
 			"flagValue": -1
@@ -2608,6 +2612,10 @@
 		"passes": {
 			"active": 1,
 			"flagValue": 1
+			},
+		"preserve_annotations": {
+			"active": false,
+			"flagValue": -1
 			},
 		"properties": {
 			"active": 1,
@@ -2711,6 +2719,10 @@
 			},
 		"webkit": {
 			"active": 0,
+			"flagValue": -1
+			},
+		"wrap_func_args": {
+			"active": true,
 			"flagValue": -1
 			},
 		"wrap_iife": {
