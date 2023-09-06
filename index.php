@@ -8,7 +8,7 @@ if (getOption('debug')) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Album Art Generator By BrainZ</title>
+        <title>Promo Pic Generator By BrainZ</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
         <link href="css/generator.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -17,14 +17,14 @@ if (getOption('debug')) {
     <body class="<?php echo (!getOption("base64web")) ? 'nobase64 ' : ''; ?><?php echo (getOption("localimgpdf")) ? 'localimgpdf ' : ''; ?>loaded">
         <nav class="grey darken-4" role="navigation">
             <div class="nav-wrapper container">
-                <a id="logo-container" href="https://sub.fm" class="brand-logo">
+                <a id="logo-container" href="https://www.sub.fm" class="brand-logo">
                     <img src="img/sublogo.png" alt="sub.fm" />
                 </a>
             </div>
         </nav>
         <div class="section no-pad-bot" id="index-banner">
             <div class="container">
-                <h1 class="header center black-text">Album Art Generator</h1>
+                <h1 class="header center black-text">Promo Pic Generator</h1>
                 <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
                 <br>
                 <div class="row">
