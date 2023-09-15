@@ -192,7 +192,7 @@ body {
 #block-1 {
   background-image: url({{image}});
   background-repeat: no-repeat;
-  background-color: #FFF;
+  background-color: #EEE;
   width: 1080px;
   height: 1080px;
   top: 0px;

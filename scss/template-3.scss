@@ -5,9 +5,25 @@
 }
 
 #block-1 {
+    background-color: #EEE;
+    width: 1080px;
+    height: 540px;
+    top:0px;
+    left: 0px;
+}
+
+#block-2 {
+    background-color: #111;
+    width: 1080px;
+    height: 540px;
+    top:540px;
+    left: 0px;
+}
+
+#block-3 {
     background-image: url({{image}});
     background-repeat: no-repeat;
-    background-color: #EEE;
+    background-color: transparent;
     width: 1080px;
     height: 1080px;
     top:0px;
@@ -17,16 +33,16 @@
 
 }
 
-#block-2 {
-    background: url(img/t2-wbm.png) center center no-repeat transparent;
+#block-4 {
+    background: url(img/t3-wbm.png) center center no-repeat transparent;
     width: 220px;
     height: 56px;
     left: 35px;
     top: 987px;
 }
 
-#block-3 {
-    background: url(img/t2-subicon.png) center center no-repeat transparent;
+#block-5 {
+    background: url(img/t3-subicon.png) center center no-repeat transparent;
     width: 166px;
     height: 130px;
     left: 877px;

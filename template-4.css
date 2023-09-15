@@ -190,9 +190,25 @@ body {
 }
 
 #block-1 {
+  background-color: #111;
+  width: 1080px;
+  height: 540px;
+  top: 0px;
+  left: 0px;
+}
+
+#block-2 {
+  background-color: #EEE;
+  width: 1080px;
+  height: 540px;
+  top: 540px;
+  left: 0px;
+}
+
+#block-3 {
   background-image: url({{image}});
   background-repeat: no-repeat;
-  background-color: #111;
+  background-color: transparent;
   width: 1080px;
   height: 1080px;
   top: 0px;
@@ -201,16 +217,16 @@ body {
   background-position: center center;
 }
 
-#block-2 {
-  background: url(img/t1-wbm.png) center center no-repeat transparent;
+#block-4 {
+  background: url(img/t4-wbm.png) center center no-repeat transparent;
   width: 220px;
   height: 56px;
   left: 35px;
   top: 987px;
 }
 
-#block-3 {
-  background: url(img/t1-subicon.png) center center no-repeat transparent;
+#block-5 {
+  background: url(img/t4-subicon.png) center center no-repeat transparent;
   width: 166px;
   height: 130px;
   left: 877px;

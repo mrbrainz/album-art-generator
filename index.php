@@ -56,8 +56,10 @@ if (getOption('debug')) {
                         <div class="row">
                             <div class="input-field col s12">
                                 <select id="templateid" name="templateid">
-                                  <option value="1" selected>OG - White Text</option>
-                                  <option value="2">OG - Black Text</option>
+                                  <option value="1" selected>Wt Text</option>
+                                  <option value="2">Blk Text</option>
+                                  <option value="3">Blk Text / Wt Logos</option>
+                                  <option value="4">Wt Text / Blk Logos</option>
                                 </select>
                                 <label for="templateid">Select template</label>
                             </div>
