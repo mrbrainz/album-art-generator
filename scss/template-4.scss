@@ -5,18 +5,11 @@
 }
 
 #block-1 {
-    background-color: #111;
+    background: rgb(238,238,238);
+    background: linear-gradient(90deg, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 25%, rgba(17,17,17,1) 75%, rgba(17,17,17,1) 100%);
     width: 1080px;
-    height: 540px;
+    height: 1080px;
     top:0px;
-    left: 0px;
-}
-
-#block-2 {
-    background-color: #EEE;
-    width: 1080px;
-    height: 540px;
-    top:540px;
     left: 0px;
 }
 

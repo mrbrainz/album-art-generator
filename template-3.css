@@ -190,18 +190,11 @@ body {
 }
 
 #block-1 {
-  background-color: #EEE;
+  background: #eeeeee;
+  background: linear-gradient(270deg, #eeeeee 0%, #eeeeee 25%, #111111 75%, #111111 100%);
   width: 1080px;
-  height: 540px;
+  height: 1080px;
   top: 0px;
-  left: 0px;
-}
-
-#block-2 {
-  background-color: #111;
-  width: 1080px;
-  height: 540px;
-  top: 540px;
   left: 0px;
 }
 
