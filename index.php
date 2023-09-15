@@ -128,6 +128,6 @@ if (getOption('debug')) {
             <?php echo (getOption("localimgpdf")) ? 'let localimgpdf = true;' : 'let localimgpdf = false;' ?>
 
         </script>
-        <script src="js/generator.js"></script>
+        <script src="js/generator.js?v=202309151632"></script>
     </body>
 </html>
