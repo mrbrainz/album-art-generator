@@ -1,0 +1,92 @@
+@use 'template-base'; 
+
+#block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #text1, #text2, #text3, #text4 {
+    font-family: pragmatica, sans-serif;
+}
+
+#block-1 {
+    background: url({{image}}) center center no-repeat #000;
+    width: 1080px;
+    height: 734px;
+    top:246px;
+    left: 0px;
+}
+
+#block-2 {
+    top:0px;
+    left: 0px;
+    height: 246px;
+    width: 1080px;
+    background: #111E1C;
+}
+
+#block-3 {
+    top:980px;
+    left: 0px;
+    height: 100px;
+    width: 1080px;
+    background: #111E1C;
+}
+
+#block-4 {
+    background: url(img/t69-oslogos.png) center center no-repeat transparent;
+    width: 184px;
+    height: 61px;
+    left: 711px;
+    top: 996px;
+}
+
+#block-5 {
+    background: url(img/t69-alexa.png) center center no-repeat transparent;
+    width: 160px;
+    height: 57px;
+    left: 903px;
+    top: 999px;
+}
+
+#block-6 {
+    background: url(img/t69-sublogo.png) center center no-repeat transparent;
+    width: 205px;
+    height: 49px;
+    left: 44px;
+    top: 1003px;
+}
+    
+h1, h2, h3, h4 {
+    color: #DECCC2;
+}
+
+#text1 {
+    top: 24px;
+    left: 39px;
+    font-size: 60px;
+    font-weight: 500;
+}
+
+#text2 {
+    display: none;
+}
+
+#text3 {
+    top: 200px;
+    left: 43px;
+    font-weight: 200;
+    font-family: "Nimbus Sans L", nimbus-sans, sans-serif;
+    font-size: 28px;
+}
+
+#text4 {
+    color: #DECCC2;
+    font-size: 27px;
+    font-weight: 200;
+    font-family: "Nimbus Sans L", nimbus-sans, sans-serif;
+    right: 38px;
+    top: 199px;
+}
+
+#block-10 {
+    width:1080px;
+    height: 1080px;
+    top: 0px;
+    left: 0px;
+}

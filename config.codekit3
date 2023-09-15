@@ -241,6 +241,45 @@
 		"oS": 0,
 		"sct": 0
 		},
+	"/scss/template-3.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-3.css",
+		"oF": 2,
+		"oS": 0,
+		"sct": 0
+		},
+	"/scss/template-4.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-4.css",
+		"oF": 2,
+		"oS": 0,
+		"sct": 0
+		},
+	"/scss/template-69.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-69.css",
+		"oF": 2,
+		"oS": 0,
+		"sct": 0
+		},
 	"/scss/template-base.scss": {
 		"aP": 0,
 		"bl": 0,
@@ -271,6 +310,16 @@
 		"ma": 0,
 		"oA": 0,
 		"oAP": "/template-2-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/template-69.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-69-min.css",
 		"oF": 0,
 		"oS": 3
 		},

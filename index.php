@@ -29,7 +29,6 @@ if (getOption('debug')) {
                 <br>
                 <div class="row">
                     <form class="col s12 m6" id="djcreds"<?php echo (getOption("localimgpdf")) ? '  enctype="multipart/form-data"' : ""; ?>>
-                        <input type="hidden" name="templateid" value="1" />
                         <div class="row">
                             <div class="input-field col s12">
                                 <input placeholder="DJ Name" id="text1" type="text" class="validate" name="text1">
@@ -52,6 +51,15 @@ if (getOption('debug')) {
                             <div class="input-field col s12">
                                 <input placeholder="3-5PM" id="text4" name="text4" type="text" class="validate">
                                 <label for="text4">Time of Show</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <select id="templateid" name="templateid">
+                                  <option value="1" selected>OG - White Text</option>
+                                  <option value="2">OG - Black Text</option>
+                                </select>
+                                <label for="templateid">Select template</label>
                             </div>
                         </div>
                          <div class="row">
