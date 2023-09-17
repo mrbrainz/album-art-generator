@@ -42,6 +42,18 @@ function setupButtons() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, {});
 
+  document.getElementById('dotoday').addEventListener('click',function(e){
+    e.preventDefault();
+    
+    var datefield = document.getElementById('text3'),
+    phtext = datefield.placeholder;
+
+    datefield.value = phtext;
+
+    M.toast({html: 'Today date populated!'});
+
+  });
+
 }
 
 function isLocalImgPDF() {
@@ -127,7 +139,6 @@ function getFormData() {
     formData = new FormData(formfields),
     formentries = Object.fromEntries(formData);
 
-    //console.log(formentries);
     return formentries;
 }
 
@@ -162,7 +173,6 @@ function postFormToServer(formdata,hasImage) {
       imgfile = document.getElementById("djimage").files[0];
     }
 
-    //console.log(img.length);
     var payload = encodeURIComponent(JSON.stringify(
                     {"id": formdata.templateid,
                      "text1": encodeURIComponent(formdata.text1),
@@ -178,14 +188,6 @@ function postFormToServer(formdata,hasImage) {
     if (imgfile) {
       formData.append("file",imgfile);
     }
-
-    // Display the key/value pairs
-    /* 
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-    } */
-
-    //console.log(payload.length);
     
     if (payload.length > max_post_size) {
       M.toast({html: 'ERROR: Data transfer too big. Try using a smaller image.'});

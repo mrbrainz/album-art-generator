@@ -93,3 +93,17 @@ body.loading #throbber {
 #wbm {
   display: inline-block;
 }
+
+#dotoday {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 8px;
+  padding: 8px;
+  line-height: 1;
+  height: auto;
+}
+
+body.nobase64 #b64row {
+  display: none;
+}

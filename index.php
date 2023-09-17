@@ -28,74 +28,83 @@ if (getOption('debug')) {
                 <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
                 <br>
                 <div class="row">
-                    <form class="col s12 m6" id="djcreds"<?php echo (getOption("localimgpdf")) ? '  enctype="multipart/form-data"' : ""; ?>>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input placeholder="DJ Name" id="text1" type="text" class="validate" name="text1">
-                                <label for="text1">DJ Name</label>
+                    
+                    <form id="djcreds"<?php echo (getOption("localimgpdf")) ? '  enctype="multipart/form-data"' : ""; ?>>
+                        <div class="col s12 m6">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input placeholder="DJ Name" id="text1" type="text" class="validate" name="text1">
+                                    <label for="text1">DJ Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input placeholder="e.g. Collab" id="text2" name="text2" type="text" class="validate">
+                                    <label for="text2">Second line</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input placeholder="<?php echo date("D d M Y"); ?>" id="text3" name="text3" type="text" class="validate">
+                                    <label for="text3">Date of Show</label>
+                                    <button id="dotoday" class="btn waves-effect waves-light">Today</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input placeholder="3-5PM" id="text4" name="text4" type="text" class="validate">
+                                    <label for="text4">Time of Show</label>
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="file-field input-field">
+                                  <div class="btn">
+                                    <span>Image <i class="material-icons right">attachment</i></span>
+                                    <input type="file" name="djimage" id="djimage" accept="image/*">
+                                  </div>
+                                  <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                  </div>
+                                  <span class="helper-text">JPG & PNG accepted</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input placeholder="e.g. Collab" id="text2" name="text2" type="text" class="validate">
-                                <label for="text2">Second line</label>
-                            </div>
+                        <div class="col s12 m1" id="prev-col">
                         </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input placeholder="<?php echo date("D d M Y"); ?>" id="text3" name="text3" type="text" class="validate">
-                                <label for="text3">Date of Show</label>
+                        <div class="col s12 m5" id="prev-col">
+                            <div class="row">
+                                <div id="image-preview">
+                                    <div id="throbber"></div>
+                                    <img id="art-preview" alt="Art Preview" src="img/t1-default.jpg" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input placeholder="3-5PM" id="text4" name="text4" type="text" class="validate">
-                                <label for="text4">Time of Show</label>
+                            <div class="row">
+                                <div class="input-field">
+                                    <select id="templateid" name="templateid">
+                                      <option value="1" selected>Wt Text</option>
+                                      <option value="2">Blk Text</option>
+                                      <option value="3">Blk Text / Wt Logos</option>
+                                      <option value="4">Wt Text / Blk Logos</option>
+                                    </select>
+                                    <label for="templateid">Select template</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <select id="templateid" name="templateid">
-                                  <option value="1" selected>Wt Text</option>
-                                  <option value="2">Blk Text</option>
-                                  <option value="3">Blk Text / Wt Logos</option>
-                                  <option value="4">Wt Text / Blk Logos</option>
-                                </select>
-                                <label for="templateid">Select template</label>
+                            <div class="row" id="b64row">
+                                <div id="base64-code" class="input-field col s12">
+                                    <textarea id="base64-art" rows="10" readonly></textarea>
+                                    <span class="helper-text">Base64 Output</span>
+                                </div>
                             </div>
-                        </div>
-                         <div class="row">
-                            <div class="file-field input-field">
-                              <div class="btn">
-                                <span>Image <i class="material-icons right">attachment</i></span>
-                                <input type="file" name="djimage" id="djimage" accept="image/*">
-                              </div>
-                              <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                              </div>
-                              <span class="helper-text">JPG & PNG accepted</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button class="btn waves-effect waves-light" id="artsubmit" type="submit" name="action">Generate <i class="material-icons right">rocket</i>
-                            </button>
+
+                            <div class="row">
+                                <button class="btn waves-effect waves-light" id="artsubmit" type="submit" name="action">Generate <i class="material-icons right">rocket</i>
+                                </button>
+                                <button class="btn waves-effect waves-light" id="copy-base64">Copy to Clipboard <i class="material-icons right">content_paste_go</i>
+                                </button>  <button class="btn waves-effect waves-light" id="download" disabled>Download <i class="material-icons right">download</i>
+                                </button> 
+                            </div>       
                         </div>
                     </form>
-                    <div class="col s12 m6" id="prev-col">
-                        <div class="row">
-                            <div id="image-preview">
-                                <div id="throbber"></div>
-                                <img id="art-preview" alt="Art Preview" src="img/t1-default.jpg" /></div>
-                            <div id="base64-code" class="input-field col s12">
-                                <textarea id="base64-art" rows="10" readonly></textarea>
-                                <span class="helper-text">Base64 Output</span>
-                            </div>
-                        </div>
-
-                            <button class="btn waves-effect waves-light" id="copy-base64">Copy to Clipboard <i class="material-icons right">content_paste_go</i>
-                            </button>  <button class="btn waves-effect waves-light" id="download">Download <i class="material-icons right">download</i>
-                            </button>      
-                    </div>
                 </div>
             </div>
         </div>
