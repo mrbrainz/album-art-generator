@@ -4,6 +4,26 @@ if (getOption('debug')) {
     ini_set("display_errors", "1");
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
     }
+
+function createTemplateDropdown() {
+    $options = json_decode(file_get_contents("templates.json"));
+
+    $dropdownhtml = '<select id="templateid" name="templateid">'.PHP_EOL;
+    $first = true;
+
+    foreach ($options as $option) {
+        $dropdownhtml .= '   <option value="'.intval($option->id).'"';
+        $dropdownhtml .= (!$first) ? '>' : 'selected>';
+        $dropdownhtml .= htmlentities($option->name).'</option>'.PHP_EOL;
+        $first = false;
+    }
+
+    $dropdownhtml .= '</select>'.PHP_EOL;
+
+    echo $dropdownhtml;
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,12 +100,7 @@ if (getOption('debug')) {
                             </div>
                             <div class="row">
                                 <div class="input-field">
-                                    <select id="templateid" name="templateid">
-                                      <option value="1" selected>Wt Text</option>
-                                      <option value="2">Blk Text</option>
-                                      <option value="3">Blk Text / Wt Logos</option>
-                                      <option value="4">Wt Text / Blk Logos</option>
-                                    </select>
+                                    <?php createTemplateDropdown(); ?>
                                     <label for="templateid">Select template</label>
                                 </div>
                             </div>
