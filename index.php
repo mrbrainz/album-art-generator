@@ -13,7 +13,7 @@ function createTemplateDropdown() {
 
     foreach ($options as $option) {
         $dropdownhtml .= '   <option value="'.intval($option->id).'"';
-        $dropdownhtml .= (!$first) ? '>' : 'selected>';
+        $dropdownhtml .= (!$first) ? '>' : ' selected>';
         $dropdownhtml .= htmlentities($option->name).'</option>'.PHP_EOL;
         $first = false;
     }
