@@ -51,6 +51,17 @@ function createTemplateDropdown() {
                     
                     <form id="djcreds"<?php echo (getOption("localimgpdf")) ? '  enctype="multipart/form-data"' : ""; ?>>
                         <div class="col s12 m6">
+                            <div id="quickselect-contain">
+                                <div class="row">
+                                    <div class="input-field">
+                                        <select id="upcomingshows" name="upcomingshows" disabled>
+                                            <option value="" default> - </option>
+                                        </select>
+                                        <label for="upcomingshows">Quick Create From Upcoming Shows</label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input placeholder="DJ Name" id="text1" type="text" class="validate" name="text1">

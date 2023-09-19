@@ -2,6 +2,7 @@ var max_post_size = 8388608;
 
 document.addEventListener('DOMContentLoaded', function() {
   setupButtons();
+  getNextShows();
   });
 
 
@@ -53,6 +54,12 @@ function setupButtons() {
     M.toast({html: 'Today date populated!'});
 
   });
+
+  document.getElementById('upcomingshows').addEventListener('change',function(e){
+      updateFormFromUpcomingShow();
+    });
+
+  
 
 }
 
@@ -252,6 +259,63 @@ function unlockForLoading() {
     buttonsclass[i].classList.remove('disabled');
   }
 
+}
+
+function addDJsToDropdown(djs) {
+    var elem = document.getElementById('upcomingshows');
+    
+    var drops = elem.innerHTML;
+
+    for (var i=0;i<djs.length;i++) {
+      drops += '<option value="'+djs[i].cleanname+'" data-timerange="'+djs[i].timerange+'" data-showdate="'+djs[i].showdate+'">'+djs[i].name+'</option>\n\r';
+    }
+
+    //console.log(drops);
+
+    elem.innerHTML = drops;
+
+    elem.removeAttribute('disabled');
+
+    var instance = M.FormSelect.init(elem, {});
+
+}
+
+function updateFormFromUpcomingShow() {
+    var sel = document.getElementById('upcomingshows');
+    var selected = sel.options[sel.selectedIndex];
+    if (!selected.value) {
+      return false;
+    }
+    var djname = selected.innerText;
+    var showdate = selected.getAttribute('data-showdate');
+    var timerange = selected.getAttribute('data-timerange');
+
+    var text1 = document.getElementById('text1');
+    var text3 = document.getElementById('text3');
+    var text4 = document.getElementById('text4');
+
+    text1.value = djname;
+    text3.value = showdate;
+    text4.value = timerange;
+
+    doPost();
+
+}
+
+function getNextShows() {
+  let xmlhttp= window.XMLHttpRequest ?
+    new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          if(this.responseText) {
+            var resp = JSON.parse(this.responseText);
+            addDJsToDropdown(resp);
+          }
+        }
+    }
+  xmlhttp.open("GET","getnextshows.php",true);
+  xmlhttp.send();
 }
 
 
