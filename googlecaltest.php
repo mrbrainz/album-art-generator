@@ -91,7 +91,9 @@ function checkCalCache() {
         return true;
     }
 
-    if (time()-filemtime($cachefile) > 10) {
+    $cacheduration = intval(getOption("cal_cache_duration"));
+
+    if (time()-filemtime($cachefile) > $cacheduration) {
         return true;
     } else {
         return false;
@@ -103,19 +105,26 @@ function checkCalCache() {
 function googleTest() {
 
     if (checkCalCache()) {
+
+        echo "<p>Cache file missing or out of date. Calling Google Calender....</p>";
+
         $shows = getNextShows();
         $djs = buildDJList($shows);
         writeCalCache($djs);
-        echo "<h2>Written new cache file</h2>";
-    } 
+        echo "<p>Written new cache file</p>";
+    } else {
+        echo "<p>Getting calendar data from cache....</p>";
+    }
 
     $cachefile = getOption("cal_cachefile");
 
+    echo '<p><strong>Cache file filemtime:</strong> '.filemtime($cachefile).'</p>';
+
     $djfile = file_get_contents($cachefile);
 
-    echo filemtime($cachefile);
+    echo "<p><strong>Cachefile decoded contents:</strong></p>";
 
-    print_r(json_decode($djfile));
+    echo '<pre>'.print_r(json_decode($djfile),true).'</pre>';
 
 } ?>
 <!DOCTYPE html>
