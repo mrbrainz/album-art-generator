@@ -190,10 +190,22 @@ function createImageFromPost() {
     $id = (isset($postdata['id'])) ? $postdata['id'] : 1;
     $image = (isset($postdata['img'])) ? $postdata['img'] : false;
     $file = (isset($postdata['imgfile'])) ? $postdata['imgfile'] : false;
+    $filename = false;
 
     //var_dump($file); exit();
-    
-    if (getOption('localimgpdf') && $file) {
+
+    if (!$image && !$file) {
+        $dj = makeCleanString($postdata['text1']);
+        $potentialfile = 'djs/'.$dj.'.jpg';
+
+        if (file_exists($potentialfile)) {
+            $filename = $potentialfile;
+        }
+    }
+
+    if ($filename) {
+        $style = createStyleSheetFromLocal($id,$filename);
+    } elseif (getOption('localimgpdf') && $file) {
         $filename = "tmp/".storeTempImage($file);
         if (file_exists($filename)) {
             $style = createStyleSheetFromLocal($id,$filename);
@@ -203,8 +215,6 @@ function createImageFromPost() {
     } else {
         $style = createStyleSheetFromBase64($id,$image);
     }
-
-    
 
     $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
     $text2 = (isset($postdata['text2'])) ? $postdata['text2'] : "";
