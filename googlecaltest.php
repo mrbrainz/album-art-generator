@@ -13,6 +13,23 @@ if (getOption('debug')) {
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
     }
 
+
+function buildDJList($calobj) {
+    $djs = [];
+
+    foreach ($calobj as $dj) {
+        $item = ['name' => $dj->summary,
+                 'starttime' => $dj->getStart(),
+                 'endtime' => $dj->getEnd()
+             ];
+        $djs[] = $item;
+    }
+
+    return $djs;
+}
+
+
+
 function googleTest() {
 	$maxEvents = 20;
     date_default_timezone_set('Europe/London');
@@ -36,14 +53,15 @@ function googleTest() {
 
 	$results = $service->events->listEvents($calendarId, $options);
 	
-    foreach ($results->items as $dj) {
+    /* foreach ($results->items as $dj) {
         if (str_starts_with($dj->summary,"Available Slot") || $dj->summary === "Archives") {
             continue;
         }
         echo "<li>".$dj->summary."</li>";
-    }
+    } */
 
-    //echo '<pre>' . print_r($results, true) . '</pre><br>';
+
+    echo '<pre>' . print_r(buildDJList($results), true) . '</pre><br>';
 
 } ?>
 <!DOCTYPE html>
