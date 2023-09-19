@@ -23,3 +23,7 @@ setOption("localimgpdf", true);
 setOption("retainfileupload", false);
 
 setOption("google_creds","google-access-token.json");
+
+setOption("cal_cachefile", __DIR__ . "/tmp/calendercache.json");
+
+setOption("cal_cache_duration", 3600);

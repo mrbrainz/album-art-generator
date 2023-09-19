@@ -13,55 +13,109 @@ if (getOption('debug')) {
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
     }
 
+function makeCleanString($string) {
+   $string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
+
+   return strtolower(preg_replace('/[^A-Za-z0-9\_]/', '', $string)); // Removes special chars.
+}
+
 
 function buildDJList($calobj) {
     $djs = [];
 
     foreach ($calobj as $dj) {
+
+        // Ignore available slots and archives
+        if (str_starts_with($dj->summary,"Available Slot") || $dj->summary === "Archives") {
+            continue;
+        }
+
+        $gstarttime = $dj->getStart();
+        $gendtime = $dj->getEnd();
+
+        $starttime = strtotime($gstarttime->dateTime);
+        $endtime = strtotime($gendtime->dateTime);
+
+        $starttime = (date("i", $starttime) !== "00") ? date("g:ia", $starttime) : date("ga", $starttime);
+
+        $endtime = (date("i", $endtime) !== "00") ? date("g:ia", $endtime) : date("ga", $endtime);
+
         $item = ['name' => $dj->summary,
-                 'starttime' => $dj->getStart(),
-                 'endtime' => $dj->getEnd()
+                 'starttime' => $starttime,
+                 'endtime' => $endtime,
+                 'timerange' => $starttime. ' - '.$endtime.' GMT',
+                 'cleanname' => makeCleanString($dj->summary)
              ];
+
         $djs[] = $item;
     }
 
     return $djs;
 }
 
+function getNextShows() {
+    $maxEvents = 20;
+    date_default_timezone_set('Europe/London');
+    $today = date("c");
+    $tomorrow = date("c", mktime(23, 59, 59, date("m"), date("d")+1, date("Y")));
+    //echo $today."<br>".$tomorrow; exit(); 
+    $calendarId = 'subfmradio@gmail.com';
+    $scope = 'https://www.googleapis.com/auth/calendar.readonly';
+    $client = new Google_Client();
+    $client->useApplicationDefaultCredentials();
+    $client->setScopes($scope);
+    $service = new Google_Service_Calendar($client);
+
+    $options = array(
+        'maxResults' => $maxEvents,
+        'orderBy' => 'startTime',
+        'singleEvents' => TRUE,
+        'timeMin' => $today,
+        'timeMax' => $tomorrow
+    );
+
+    $results = $service->events->listEvents($calendarId, $options);
+
+    return $results;
+}
+
+function writeCalCache($data) {
+    file_put_contents( getOption("cal_cachefile"), json_encode($data));
+}
+
+function checkCalCache() {
+
+    $cachefile = getOption("cal_cachefile");
+
+    if (!file_exists($cachefile)) {
+        return true;
+    }
+
+    if (time()-filemtime($cachefile) > 10) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
 
 
 function googleTest() {
-	$maxEvents = 20;
-    date_default_timezone_set('Europe/London');
-	$today = date("c");
-    $tomorrow = date("c", mktime(23, 59, 59, date("m"), date("d")+1, date("Y")));
-    //echo $today."<br>".$tomorrow; exit(); 
-	$calendarId = 'subfmradio@gmail.com';
-	$scope = 'https://www.googleapis.com/auth/calendar.readonly';
-	$client = new Google_Client();
-	$client->useApplicationDefaultCredentials();
-	$client->setScopes($scope);
-	$service = new Google_Service_Calendar($client);
 
-	$options = array(
-	    'maxResults' => $maxEvents,
-	    'orderBy' => 'startTime',
-	    'singleEvents' => TRUE,
-	    'timeMin' => $today,
-        'timeMax' => $tomorrow
-	);
+    if (checkCalCache()) {
+        $shows = getNextShows();
+        $djs = buildDJList($shows);
+        writeCalCache($djs);
+        echo "<h2>Written new cache file</h2>";
+    } 
 
-	$results = $service->events->listEvents($calendarId, $options);
-	
-    /* foreach ($results->items as $dj) {
-        if (str_starts_with($dj->summary,"Available Slot") || $dj->summary === "Archives") {
-            continue;
-        }
-        echo "<li>".$dj->summary."</li>";
-    } */
+    $cachefile = getOption("cal_cachefile");
 
+    $djfile = file_get_contents($cachefile);
 
-    echo '<pre>' . print_r(buildDJList($results), true) . '</pre><br>';
+    echo filemtime($cachefile);
+
+    print_r(json_decode($djfile));
 
 } ?>
 <!DOCTYPE html>
