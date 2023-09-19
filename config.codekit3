@@ -389,6 +389,14 @@
 		"oAP": "/build/tmp",
 		"oF": 0
 		},
+	"/tmp_phpInfo_968FDECA-FBED-4D63-8344-D80B254358F1-12049-000000B6B60A94D4_8.0.8.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/tmp_phpInfo_968FDECA-FBED-4D63-8344-D80B254358F1-12049-000000B6B60A94D4_8.0.8.php",
+		"oF": 0
+		},
 	"/vendor": {
 		"ft": 65536,
 		"oA": 1,
