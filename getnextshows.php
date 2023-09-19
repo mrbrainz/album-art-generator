@@ -46,7 +46,7 @@ function buildDJList($calobj) {
     return $djs;
 }
 
-function getNextShows() {
+function getNextShowsFromGCal() {
     $maxEvents = 20;
     date_default_timezone_set('Europe/London');
     $today = date("c");
@@ -94,17 +94,24 @@ function checkCalCache() {
 
 }
 
-function returnNextShows() {
+function getNextShows() {
     $djs = false;
 
     if (checkCalCache()) {
-        $shows = getNextShows();
+        $shows = getNextShowsFromGCal();
         $djs = buildDJList($shows);
         writeCalCache($djs);
     } else {
         $cachefile = getOption("cal_cachefile");
         $djs = json_decode(file_get_contents($cachefile));
     }
+
+    return $djs;
+}
+
+function returnNextShows() {
+    
+    $djs = getNextShows();
 
     if ($djs) {
         returnJSONSuccess($djs);
