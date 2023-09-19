@@ -11,7 +11,7 @@ require_once "corefunctions.php";
 
 
 // Show PHP error messages
-setOption("debug",false);
+setOption("debug",true);
 
 // Show Base64 copy/paste options
 setOption("base64web",false);
@@ -21,3 +21,5 @@ setOption("localimgpdf", true);
 
 // Doesn't delete file from /tmp after upload
 setOption("retainfileupload", false);
+
+setOption("google_creds","google-access-token.json");

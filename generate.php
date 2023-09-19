@@ -9,8 +9,6 @@ if (getOption('debug')) {
 $startTime = microtime(true);  
 }
 
-require_once __DIR__ . '/vendor/autoload.php';
-
 function createStyleSheetFromBase64($id,$blob) {
     $stylesheet = file_get_contents('normalize.css');
     $stylesheet .= file_get_contents('template-'.intval($id).'.css');

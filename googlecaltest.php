@@ -1,6 +1,38 @@
-<?php
+<?php require_once "config.php"; 
+
+$creds = getOption("google_creds");
+
+if (!$creds || !file_exists($creds)) {
+	echo "No Google OAuth creds found.";
+}
+
+putenv("GOOGLE_APPLICATION_CREDENTIALS=".$creds);
+
+if (getOption('debug')) {
+    ini_set("display_errors", "1");
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+    }
+
 function googleTest() {
-	echo "Google Test";
+	$maxEvents = 100;
+	$minStartDate = date('c');
+	$calendarId = 'subfmradio@gmail.com';
+	$scope = 'https://www.googleapis.com/auth/calendar.readonly';
+	$client = new Google_Client();
+	$client->useApplicationDefaultCredentials();
+	$client->setScopes($scope);
+	$service = new Google_Service_Calendar($client);
+
+	$options = array(
+	    'maxResults' => $maxEvents,
+	    'orderBy' => 'startTime',
+	    'singleEvents' => TRUE,
+	    'timeMin' => $minStartDate
+	);
+
+	$results = $service->events->listEvents($calendarId, $options);
+	echo '<pre>' . print_r($results, true) . '</pre><br>';
+
 } ?>
 <!DOCTYPE html>
 <html>
