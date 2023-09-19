@@ -29,6 +29,8 @@ function buildDJList($calobj) {
         $starttime = strtotime($gstarttime->dateTime);
         $endtime = strtotime($gendtime->dateTime);
 
+        $showdate = date("D d M Y",$starttime);
+
         $starttime = (date("i", $starttime) !== "00") ? date("g:ia", $starttime) : date("ga", $starttime);
 
         $endtime = (date("i", $endtime) !== "00") ? date("g:ia", $endtime) : date("ga", $endtime);
@@ -37,7 +39,8 @@ function buildDJList($calobj) {
                  'starttime' => $starttime,
                  'endtime' => $endtime,
                  'timerange' => $starttime. ' - '.$endtime.' GMT',
-                 'cleanname' => makeCleanString($dj->summary)
+                 'cleanname' => makeCleanString($dj->summary),
+                 'showdate' => $showdate
              ];
 
         $djs[] = $item;
