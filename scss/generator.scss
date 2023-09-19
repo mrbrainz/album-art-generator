@@ -77,4 +77,38 @@ h1.header {
 
 body.loading #throbber {
 	display: block;
+} 
+
+.nobase64 {
+	#base64-code, #copy-base64 {
+		display: none;
+	}
+}
+
+#wbm a {
+	font-size: 0;
+	padding: 0;
+	width: 221px;
+	height: 57px;
+	background: url(../img/t1-wbm.png) center center no-repeat transparent;
+	background-size: contain;
+	display: inline-block;
+}
+
+#wbm {
+	display: inline-block;
+}
+
+#dotoday {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 8px;
+	padding: 8px;
+	line-height: 1;
+	height: auto;
+}
+
+body.nobase64 #b64row {
+	display: none;
 }

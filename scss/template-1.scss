@@ -1,17 +1,20 @@
 @use 'template-base'; 
 
 #block-1, #block-2, #block-3, #block-4, #block-5, #block-6, #block-7, #block-8, #block-9, #block-10, #text1, #text2, #text3, #text4 {
-    font-family: nimbus-sans-bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Nimbus Sans L", nimbus-sans;
 }
 
 #block-1 {
-    background: url({{image}}) center center no-repeat #000;
-    /* background: url(img/template1.jpg) center center no-repeat #000!important; */
-    background-size: cover;
+    background-image: url({{image}});
+    background-repeat: no-repeat;
+    background-color: #111;
     width: 1080px;
     height: 1080px;
     top:0px;
     left: 0px;
+    background-size: contain;
+    background-position: center center;
+
 }
 
 #block-2 {

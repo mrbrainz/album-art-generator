@@ -1,84 +1,12 @@
 <?php
 
-ini_set("display_errors", "1");
-error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+require_once "config.php";
+
+if (getOption('debug')) {
+    ini_set("display_errors", "1");
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
 
 $startTime = microtime(true);  
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-function isPost() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      return true;
-    }
-        /* if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
-          http_response_code(400);
-          exit;
-        }
-        return true; */
-    
-    return false;
-}
-
-function readPostData() {
-
-    $output = [];
-    if (isset($_POST['payload'])) {
-        $output = json_decode($_POST['payload'], true);
-        // var_dump($output);
-        foreach($output as $key=>$value) {
-            $output[$key] = urldecode($value);
-        }
-    }
-
-    return $output;
-}
-
-function sanitiseFilename($file) {
-    // Remove anything which isn't a word, whitespace, number
-    // or any of the following caracters -_~,;[]().
-    $file = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $file);
-    // Remove any runs of periods
-    $file = mb_ereg_replace("([\.]{2,})", '', $file);
-    
-    return $file;
-}
-
- function is_base64($s) {
-      return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
-}
-
- function is_base64_image($s) {
-     $s = explode(";base64,",$s);
-    
-    if (sizeof($s) == 2) {
-    
-        if(substr( $blobparts[0], 0, 11 ) != "data:image/") {
-            return false;
-        }  
-
-        if (!is_base64($blobparts[1])) {
-            return false;
-        }
-    } else {
-        return false;
-    }
-    return true;
- }
-
-function createStylesheetFromLocal($id,$imagefile) {
-    $stylesheet = file_get_contents('normalize.css');
-    $stylesheet .= file_get_contents('template-'.intval($id).'.css');
-    $imagefile = sanitiseFilename($imagefile);
-    if (file_exists("djs/".$imagefile)) {
-        $imagefile = "djs/".$imagefile;
-    } else {
-        $imagefile = "img/t".intval($id)."-default.jpg";
-    }
-        
-    $stylesheet = str_replace("{{image}}", $imagefile, $stylesheet);
-        
-    return $stylesheet;
 }
 
 function createStyleSheetFromBase64($id,$blob) {
@@ -95,9 +23,6 @@ function createStyleSheetFromBase64($id,$blob) {
             $blob = "img/t".intval($id)."-default.jpg";
         }  
 
-        /* if (!is_base64($blobparts[1])) {
-            $blob = "img/t".intval($id)."-default.jpg";
-        }*/
     } else {
         $blob = "img/t".intval($id)."-default.jpg";
     }
@@ -107,6 +32,22 @@ function createStyleSheetFromBase64($id,$blob) {
     return $stylesheet;
 }
 
+
+function createStyleSheetFromLocal($id = 1,$file = "") {
+
+    $id = intval($id);
+    $stylesheet = file_get_contents('normalize.css');
+    $stylesheet .= file_get_contents('template-'.$id.'.css');
+
+    if (!file_exists($file)) { 
+            $file = "img/t".$id."-default.jpg";
+        } 
+        
+    $stylesheet = str_replace("{{image}}", '"'.$file.'"', $stylesheet);
+    return $stylesheet;
+
+}
+
 function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     
     // Add config for custom font folder
@@ -114,7 +55,9 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     $fontDirs = $defaultConfig['fontDir'];
 
     $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
-    $fontData = $defaultFontConfig['fontdata'];
+    $fontData = $defaultFontConfig['fontdata']; 
+
+    //print_r($fontData); exit;
 
     $mpdf = new \Mpdf\Mpdf([
         'tempDir' => __DIR__."/tmp",
@@ -133,11 +76,9 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
                 'R' => 'NimbusSansNovusT-UltraLight.ttf'
             ]
             ,
-            'nimbus-sans-regular' => [
-                'R' => 'NimbusSanL-Reg.ttf'
-            ],
-            'nimbus-sans-bold' => [
-                'R' => 'NimbusSanL-Bol.ttf'
+            'nimbus-sans' => [
+                'R' => 'NimbusSanL-Reg.ttf',
+                'B' => 'NimbusSanL-Bol.ttf'
             ]
         ]
         ]);
@@ -149,6 +90,7 @@ function createPDFBlob($stylesheet,$html,$outputanddie = false) {
     
     if ($outputanddie) {
         $mpdf->Output('', 'I'); exit();
+        //$mpdf->Output('tmp/temp.pdf', 'F'); exit();
     }
 
     return $mpdf->Output('', 'S');
@@ -234,25 +176,12 @@ function pdfToTempImage($path,$format) {
 
 }
 
-function brainzTest() {
-
-    $file = "djs/t1-brainz.jpg";
-    $mimetype = mime_content_type($file);
-    //$mimetype = ($mimetype === "image/jpeg") ? "image/jpg" : $mimetype;
-
-    $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
-
-    $brainzstyle = createStyleSheetFromBase64(1,$base64file);
-
-    //var_dump($brainzstyle); exit();
-    
-    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");
-    print_r($brainzstyle); exit();                   
-    $pdfoutput = createPDFBlob($brainzstyle,$arthtml,true);
-    $art = pdfToBase64($pdfoutput,"jpg");
-    //$art = "performance";
-    return $art;
-
+function storeTempImage($file) {
+    $tempfolder = __DIR__."/tmp";
+    $path_info = pathinfo($file['name']);
+    $filename = 'djpic-'.time().'-'.rand(0,99999).'.'.$path_info['extension'];
+    move_uploaded_file($file['tmp_name'], $tempfolder."/".$filename);
+    return $filename;
 }
 
 function createImageFromPost() {
@@ -260,7 +189,22 @@ function createImageFromPost() {
 
     $id = (isset($postdata['id'])) ? $postdata['id'] : 1;
     $image = (isset($postdata['img'])) ? $postdata['img'] : false;
-    $style = createStyleSheetFromBase64($id,$image);
+    $file = (isset($postdata['imgfile'])) ? $postdata['imgfile'] : false;
+
+    //var_dump($file); exit();
+    
+    if (getOption('localimgpdf') && $file) {
+        $filename = "tmp/".storeTempImage($file);
+        if (file_exists($filename)) {
+            $style = createStyleSheetFromLocal($id,$filename);
+        } else {
+            $style = createStyleSheetFromBase64($id,$image);
+        }
+    } else {
+        $style = createStyleSheetFromBase64($id,$image);
+    }
+
+    
 
     $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
     $text2 = (isset($postdata['text2'])) ? $postdata['text2'] : "";
@@ -269,9 +213,16 @@ function createImageFromPost() {
 
     $arthtml = createArtHTML($text1,$text2,$text3,$text4);
     $pdfoutput = createPDFBlob($style,$arthtml);
+    if (getOption('localimgpdf') && $file && !getOption("retainfileupload")) {
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
+    }
     $art = pdfToBase64($pdfoutput,"jpg");
     return $art;
 }
+
+
 
 if (isPost()) {
     http_response_code(200);
@@ -282,6 +233,28 @@ if (isPost()) {
         http_response_code(400);
     }
     exit();
+}
+
+function brainzTest() {
+
+    $file = "djs/t1-brainz.jpg";
+
+    if (getOption('localimgpdf')) {
+        $brainzstyle = createStyleSheetFromLocal(1,$file);
+    } else {
+        $mimetype = mime_content_type($file);
+        $base64file = 'data:'.$mimetype.';base64,'.base64_encode(file_get_contents($file));
+        $brainzstyle = createStyleSheetFromBase64(1,$base64file);
+    }
+    
+    $arthtml = createArtHTML("DJ Brainz","With MC Whistles","12 Aug 2023", "3-5PM");
+
+    $pdfoutput = createPDFBlob($brainzstyle,$arthtml);
+
+    $art = pdfToBase64($pdfoutput,"jpg");
+
+    return $art;
+
 }
 
 ?>
@@ -302,8 +275,10 @@ if (isPost()) {
 
 <?php 
 
-$endTime = microtime(true);  
+if (getOption('debug')) {
+    $endTime = microtime(true);  
     $elapsed = $endTime - $startTime;
     echo "<!-- Execution time : $elapsed seconds -->";
+}
 
 exit();
