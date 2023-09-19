@@ -3,7 +3,7 @@
 $creds = getOption("google_creds");
 
 if (!$creds || !file_exists($creds)) {
-	echo "No Google OAuth creds found.";
+	returnError(["No Google OAuth creds found."]);
 }
 
 putenv("GOOGLE_APPLICATION_CREDENTIALS=".$creds);
@@ -12,7 +12,6 @@ if (getOption('debug')) {
     ini_set("display_errors", "1");
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
     }
-
 
 function buildDJList($calobj) {
     $djs = [];
@@ -95,58 +94,24 @@ function checkCalCache() {
 
 }
 
-
-function googleTest() {
+function returnNextShows() {
+    $djs = false;
 
     if (checkCalCache()) {
-
-        echo "<p>Cache file missing or out of date. Calling Google Calender....</p>";
-
         $shows = getNextShows();
         $djs = buildDJList($shows);
         writeCalCache($djs);
-        echo "<p>Written new cache file</p>";
     } else {
-        echo "<p>Getting calendar data from cache....</p>";
+        $cachefile = getOption("cal_cachefile");
+        $djs = json_decode(file_get_contents($cachefile));
     }
 
-    $cachefile = getOption("cal_cachefile");
+    if ($djs) {
+        returnJSONSuccess($djs);
+    } else {
+        returnError(['No DJ data found']);
+    }
 
-    echo '<p><strong>Cache file filemtime:</strong> '.filemtime($cachefile).'</p>';
+}
 
-    $djfile = file_get_contents($cachefile);
-
-    echo "<p><strong>Cachefile decoded contents:</strong></p>";
-
-    echo '<pre>'.print_r(json_decode($djfile),true).'</pre>';
-
-} ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Google Calendar Test By BrainZ</title>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-        <link href="css/generator.css" type="text/css" rel="stylesheet" media="screen,projection" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-    <body>
-        <nav class="grey darken-4" role="navigation">
-            <div class="nav-wrapper container">
-                <a id="logo-container" href="https://sub.fm" class="brand-logo">
-                    <img src="img/sublogo.png" alt="sub.fm" />
-                </a>
-            </div>
-        </nav>
-        <div class="section no-pad-bot" id="index-banner">
-            <div class="container">
-                <h1 class="header center black-text">Google Calendar Test</h1>
-                <h3 class="header center black-text">by <a href="https://x.com/mrbrainz">@MrBrainz</a></h3>
-                <br>
-                <div class="row">
-                    <?php googleTest(); ?>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+returnNextShows();

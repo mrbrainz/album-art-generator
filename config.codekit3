@@ -115,6 +115,14 @@
 		"oAP": "/generate.php",
 		"oF": 0
 		},
+	"/getnextshows.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/getnextshows.php",
+		"oF": 0
+		},
 	"/google-access-token.json": {
 		"ft": 524288,
 		"oA": 1,
