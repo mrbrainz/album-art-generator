@@ -14,8 +14,11 @@ if (getOption('debug')) {
     }
 
 function googleTest() {
-	$maxEvents = 100;
-	$minStartDate = date('c');
+	$maxEvents = 20;
+    date_default_timezone_set('Europe/London');
+	$today = date("c");
+    $tomorrow = date("c", mktime(23, 59, 59, date("m"), date("d")+1, date("Y")));
+    //echo $today."<br>".$tomorrow; exit(); 
 	$calendarId = 'subfmradio@gmail.com';
 	$scope = 'https://www.googleapis.com/auth/calendar.readonly';
 	$client = new Google_Client();
@@ -27,11 +30,17 @@ function googleTest() {
 	    'maxResults' => $maxEvents,
 	    'orderBy' => 'startTime',
 	    'singleEvents' => TRUE,
-	    'timeMin' => $minStartDate
+	    'timeMin' => $today,
+        'timeMax' => $tomorrow
 	);
 
 	$results = $service->events->listEvents($calendarId, $options);
-	echo '<pre>' . print_r($results, true) . '</pre><br>';
+	
+    foreach ($results->items as $dj) {
+        echo "<li>".$dj->summary."</li>";
+    }
+
+    //echo '<pre>' . print_r($results, true) . '</pre><br>';
 
 } ?>
 <!DOCTYPE html>
