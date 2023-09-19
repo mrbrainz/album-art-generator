@@ -4,3 +4,5 @@ tmp/*
 
 # exception to the rule
 !tmp 
+
+google-access-token.json
