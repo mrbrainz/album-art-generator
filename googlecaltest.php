@@ -37,6 +37,9 @@ function googleTest() {
 	$results = $service->events->listEvents($calendarId, $options);
 	
     foreach ($results->items as $dj) {
+        if (str_starts_with($dj->summary,"Available Slot") || $dj->summary === "Archives") {
+            continue;
+        }
         echo "<li>".$dj->summary."</li>";
     }
 
