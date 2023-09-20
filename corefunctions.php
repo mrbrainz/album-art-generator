@@ -111,3 +111,22 @@ function makeCleanString($string) {
 
    return strtolower(preg_replace('/[^A-Za-z0-9\_]/', '', $string)); // Removes special chars.
 }
+
+function checkCache($cachefile, $duration) {
+
+    if (!file_exists($cachefile)) {
+        return false;
+    }
+
+    $cacheduration = intval($duration);
+
+    if (time()-filemtime($cachefile) > $cacheduration) {
+        return false;
+    } else {
+        return true;
+    }
+} 
+
+function writeCache($destination, $data) {
+    file_put_contents($destination, json_encode($data));
+}

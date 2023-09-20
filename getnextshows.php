@@ -76,31 +76,23 @@ function getNextShowsFromGCal() {
 }
 
 function writeCalCache($data) {
-    file_put_contents( getOption("cal_cachefile"), json_encode($data));
+    writeCache(getOption("cal_cachefile"), $data);
 }
 
 function checkCalCache() {
 
     $cachefile = getOption("cal_cachefile");
 
-    if (!file_exists($cachefile)) {
-        return true;
-    }
+    $cacheduration = getOption("cal_cache_duration");
 
-    $cacheduration = intval(getOption("cal_cache_duration"));
-
-    if (time()-filemtime($cachefile) > $cacheduration) {
-        return true;
-    } else {
-        return false;
-    }
+    return checkCache($cachefile,$cacheduration);
 
 }
 
 function getNextShows() {
     $djs = false;
 
-    if (checkCalCache()) {
+    if (!checkCalCache()) {
         $shows = getNextShowsFromGCal();
         $djs = buildDJList($shows);
         writeCalCache($djs);
