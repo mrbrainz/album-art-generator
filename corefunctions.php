@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 function setOption($name,$value) {
 	if (!isset ($GLOBALS['options'])) {
 		$GLOBALS['options'] = [];
@@ -79,3 +81,52 @@ function sanitiseFilename($file) {
     }
     return true;
  }
+
+ function returnError($errors = []) {
+    if (!is_array($errors) || !count($errors)) {
+        return false;
+    }
+
+    $err = ['error' => $errors];
+
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(500);
+    echo json_encode($err, JSON_PRETTY_PRINT);
+    exit();
+}
+
+function returnJSONSuccess($arr = []) {
+    if (!is_array($arr) || !count($arr)) {
+        return false;
+    }
+
+    header('Content-Type: application/json; charset=utf-8');
+    http_response_code(200);
+    echo json_encode($arr, JSON_PRETTY_PRINT);
+    exit();
+}
+
+function makeCleanString($string) {
+   $string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
+
+   return strtolower(preg_replace('/[^A-Za-z0-9\_]/', '', $string)); // Removes special chars.
+}
+
+function checkCache($cachefile, $duration) {
+
+    if (!file_exists($cachefile)) {
+        return false;
+    }
+
+    $cacheduration = intval($duration);
+
+    if (time()-filemtime($cachefile) > $cacheduration) {
+        return false;
+    } else {
+        return true;
+    }
+} 
+
+function writeCache($destination, $data) {
+    file_put_contents($destination, json_encode($data));
+}

@@ -115,6 +115,30 @@
 		"oAP": "/generate.php",
 		"oF": 0
 		},
+	"/getnextshows.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/getnextshows.php",
+		"oF": 0
+		},
+	"/google-access-token.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/google-access-token-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"/googlecaltest.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/googlecaltest.php",
+		"oF": 0
+		},
 	"/img": {
 		"ft": 65536,
 		"oA": 1,
@@ -241,6 +265,45 @@
 		"oS": 0,
 		"sct": 0
 		},
+	"/scss/template-3.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/scss/template-3.css",
+		"oF": 0,
+		"oS": 0,
+		"sct": 0
+		},
+	"/scss/template-4.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/scss/template-4.css",
+		"oF": 0,
+		"oS": 0,
+		"sct": 0
+		},
+	"/scss/template-69.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"ec": 1,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/scss/template-69.css",
+		"oF": 0,
+		"oS": 0,
+		"sct": 0
+		},
 	"/scss/template-base.scss": {
 		"aP": 0,
 		"bl": 0,
@@ -274,6 +337,36 @@
 		"oF": 0,
 		"oS": 3
 		},
+	"/template-3.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-3-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/template-4.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-4-min.css",
+		"oF": 0,
+		"oS": 3
+		},
+	"/template-69.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "/template-69-min.css",
+		"oF": 0,
+		"oS": 3
+		},
 	"/template.html": {
 		"cB": 0,
 		"ft": 8192,
@@ -282,10 +375,26 @@
 		"oAP": "/template.html",
 		"oF": 0
 		},
+	"/templates.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/templates-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
 	"/tmp": {
 		"ft": 65536,
 		"oA": 1,
 		"oAP": "/build/tmp",
+		"oF": 0
+		},
+	"/tmp_phpInfo_968FDECA-FBED-4D63-8344-D80B254358F1-12049-000000B6B60A94D4_8.0.8.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/tmp_phpInfo_968FDECA-FBED-4D63-8344-D80B254358F1-12049-000000B6B60A94D4_8.0.8.php",
 		"oF": 0
 		},
 	"/vendor": {

@@ -2,14 +2,14 @@
 
 require_once "config.php";
 
+require_once "imagecachefuncs.php";
+
 if (getOption('debug')) {
     ini_set("display_errors", "1");
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
 
 $startTime = microtime(true);  
 }
-
-require_once __DIR__ . '/vendor/autoload.php';
 
 function createStyleSheetFromBase64($id,$blob) {
     $stylesheet = file_get_contents('normalize.css');
@@ -41,7 +41,7 @@ function createStyleSheetFromLocal($id = 1,$file = "") {
     $stylesheet = file_get_contents('normalize.css');
     $stylesheet .= file_get_contents('template-'.$id.'.css');
 
-    if (!file_exists($file)) { 
+    if (!file_exists($file) && !str_starts_with($file,'https://www.sub.fm')) { 
             $file = "img/t".$id."-default.jpg";
         } 
         
@@ -192,10 +192,29 @@ function createImageFromPost() {
     $id = (isset($postdata['id'])) ? $postdata['id'] : 1;
     $image = (isset($postdata['img'])) ? $postdata['img'] : false;
     $file = (isset($postdata['imgfile'])) ? $postdata['imgfile'] : false;
+    $filename = false;
 
     //var_dump($file); exit();
-    
-    if (getOption('localimgpdf') && $file) {
+
+    if (!$image && !$file) {
+        $dj = makeCleanString($postdata['text1']);
+        $potentialfile = 'djs/'.$dj.'.jpg';
+
+        if (file_exists($potentialfile)) {
+            $filename = $potentialfile;
+        } else {
+            $djimages = getDJImages();
+            $search = searchForDJ($dj, $djimages);
+
+            if ($search) {
+                $filename = $djimages[$search]->img;
+            }
+        }
+    }
+
+    if ($filename) {
+        $style = createStyleSheetFromLocal($id,$filename);
+    } elseif (getOption('localimgpdf') && $file) {
         $filename = "tmp/".storeTempImage($file);
         if (file_exists($filename)) {
             $style = createStyleSheetFromLocal($id,$filename);
@@ -205,8 +224,6 @@ function createImageFromPost() {
     } else {
         $style = createStyleSheetFromBase64($id,$image);
     }
-
-    
 
     $text1 = (isset($postdata['text1'])) ? $postdata['text1'] : "";
     $text2 = (isset($postdata['text2'])) ? $postdata['text2'] : "";

@@ -75,8 +75,8 @@ class ComposerStaticInitee2b4bc52b5dbb5651da5e481a9db5b8
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -162,6 +162,8 @@ class ComposerStaticInitee2b4bc52b5dbb5651da5e481a9db5b8
         'Google_Task_Retryable' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Task_Runner' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
         'Google_Utils_UriTemplate' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
+        'simple_html_dom' => __DIR__ . '/..' . '/wikia/simplehtmldom/simple_html_dom.php',
+        'simple_html_dom_node' => __DIR__ . '/..' . '/wikia/simplehtmldom/simple_html_dom.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => 'f0583041816d5db3d8b61e21727b0e88e351443a',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '574fa4bf8200c4fbf1a04223b4a5222c4bf33d09',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'f0583041816d5db3d8b61e21727b0e88e351443a',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '574fa4bf8200c4fbf1a04223b4a5222c4bf33d09',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -83,9 +83,9 @@
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
-            'pretty_version' => '3.4.0',
-            'version' => '3.4.0.0',
-            'reference' => 'e2392369686d420ca32df3803de28b5d6f76867d',
+            'pretty_version' => '2.9.1',
+            'version' => '2.9.1.0',
+            'reference' => 'f259e2b15fb95494c83f52d3caad003bbf5ffaa1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
@@ -220,7 +220,7 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'ralouphie/getallheaders' => array(
@@ -242,11 +242,20 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v3.3.0',
-            'version' => '3.3.0.0',
-            'reference' => '7c3aff79d10325257a001fcf92d991f24fc967cf',
+            'pretty_version' => 'v3.0.2',
+            'version' => '3.0.2.0',
+            'reference' => '26954b3d62a6c5fd0ea8a2a00c0353a14978d05c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wikia/simplehtmldom' => array(
+            'pretty_version' => 'v1.8.1',
+            'version' => '1.8.1.0',
+            'reference' => 'b220e198c4f7cf152b1e467b2f5f3f40244b84a6',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wikia/simplehtmldom',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
