@@ -27,4 +27,6 @@ return array(
     'Google_Task_Retryable' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Task_Runner' => $vendorDir . '/google/apiclient/src/aliases.php',
     'Google_Utils_UriTemplate' => $vendorDir . '/google/apiclient/src/aliases.php',
+    'simple_html_dom' => $vendorDir . '/wikia/simplehtmldom/simple_html_dom.php',
+    'simple_html_dom_node' => $vendorDir . '/wikia/simplehtmldom/simple_html_dom.php',
 );

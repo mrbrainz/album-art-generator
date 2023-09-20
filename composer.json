@@ -1,7 +1,8 @@
 {
 "require":{
         "mpdf/mpdf":"8.*",
-        "google/apiclient": "^2.15.0"
+        "google/apiclient": "^2.15.0",
+                "wikia/simplehtmldom": "^1.8"
     },
         "config": {
                 "platform": {

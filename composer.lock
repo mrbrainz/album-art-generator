@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9a9615ca623d71387c0486935a27871",
+    "content-hash": "6c794b8d50de7a2c023f9923915b4af0",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -1567,6 +1567,36 @@
                 }
             ],
             "time": "2022-01-02T09:55:41+00:00"
+        },
+        {
+            "name": "wikia/simplehtmldom",
+            "version": "v1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/simplehtmldom.git",
+                "reference": "b220e198c4f7cf152b1e467b2f5f3f40244b84a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wikia/simplehtmldom/zipball/b220e198c4f7cf152b1e467b2f5f3f40244b84a6",
+                "reference": "b220e198c4f7cf152b1e467b2f5f3f40244b84a6",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "simple_html_dom.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A simple PHP HTML DOM parser written in PHP5+, supports invalid HTML, and provides a very easy way to handle HTML elements.",
+            "support": {
+                "source": "https://github.com/Wikia/simplehtmldom/tree/v1.8.1"
+            },
+            "time": "2019-03-29T12:37:03+00:00"
         }
     ],
     "packages-dev": [],
@@ -1580,5 +1610,5 @@
     "platform-overrides": {
         "php": "8.0.3"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
