@@ -2,6 +2,8 @@
 
 require_once "config.php";
 
+require_once "imagecachefuncs.php";
+
 if (getOption('debug')) {
     ini_set("display_errors", "1");
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
@@ -39,7 +41,7 @@ function createStyleSheetFromLocal($id = 1,$file = "") {
     $stylesheet = file_get_contents('normalize.css');
     $stylesheet .= file_get_contents('template-'.$id.'.css');
 
-    if (!file_exists($file)) { 
+    if (!file_exists($file) && !str_starts_with($file,'https://www.sub.fm')) { 
             $file = "img/t".$id."-default.jpg";
         } 
         
@@ -200,6 +202,13 @@ function createImageFromPost() {
 
         if (file_exists($potentialfile)) {
             $filename = $potentialfile;
+        } else {
+            $djimages = getDJImages();
+            $search = searchForDJ($dj, $djimages);
+
+            if ($search) {
+                $filename = $djimages[$search]->img;
+            }
         }
     }
 
