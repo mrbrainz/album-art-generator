@@ -68,10 +68,10 @@ function getDJImages() {
 		$html = getDJHTML();
 		$djs = extractDJsFromHTML($html);
 		writeDJImageCache($djs);
-	} else {
-		$cachefile = getOption("dj_img_cachefile");
-        $djs = json_decode(file_get_contents($cachefile));
-	}
+	} 
+
+	$cachefile = getOption("dj_img_cachefile");
+    $djs = json_decode(file_get_contents($cachefile));
 
 	return $djs;
 	
