@@ -27,3 +27,8 @@ setOption("google_creds","google-access-token.json");
 setOption("cal_cachefile", __DIR__ . "/tmp/calendercache.json");
 
 setOption("cal_cache_duration", 3600);
+
+setOption("dj_img_cachefile", __DIR__ . "/tmp/djimgcache.json");
+
+setOption("dj_img_cache_duration", 24 * 3600);
+
