@@ -9,11 +9,31 @@ require_once "config.php";
 
 require_once "vendor/wikia/simplehtmldom/simple_html_dom.php";
 
+function getHTML($url) {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_REFERER, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    $str = curl_exec($curl);
+    curl_close($curl);
+
+    return $str;
+}
+
 function getDJHTML() {
 
+    $html = new simple_html_dom();
+
 	$containerel = ".pt-cv-page > div";
-    
-    $html = file_get_html('https://www.sub.fm/djs/');
+
+    $url = 'https://www.sub.fm/djs/';
+
+    $htmlresp = getHTML($url);
+
+    $html->load($htmlresp);
 
     return $html->find($containerel);
 }
