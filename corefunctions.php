@@ -107,7 +107,8 @@ function returnJSONSuccess($arr = []) {
 }
 
 function makeCleanString($string) {
-   $string = str_replace(' ', '_', $string); // Replaces all spaces with hyphens.
+
+   $string = str_replace(' ', '_', html_entity_decode($string)); // Replaces all spaces with hyphens.
 
    return strtolower(preg_replace('/[^A-Za-z0-9\_]/', '', $string)); // Removes special chars.
 }
@@ -128,5 +129,5 @@ function checkCache($cachefile, $duration) {
 } 
 
 function writeCache($destination, $data) {
-    file_put_contents($destination, json_encode($data));
+    file_put_contents($destination, json_encode($data, JSON_PRETTY_PRINT));
 }
