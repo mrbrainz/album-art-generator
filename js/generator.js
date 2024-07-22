@@ -34,7 +34,7 @@ function setupButtons() {
     if (!base64) {
       return false;
     } else {
-      downloadBase64File(base64, 'albumart.jpg');
+      downloadBase64File(base64, generateFileName()+'.jpg');
       M.toast({html: 'Download triggered!'});
     }
 
@@ -318,4 +318,24 @@ function getNextShows() {
   xmlhttp.send();
 }
 
+function generateCleanName(dj) {
+  if (typeof(dj) !== 'undefined' && dj) { 
+    return dj.replace(/ /g,"_").replace(/[^a-zA-Z0-9\-_]/g, "");
+  } else {
+    return false;
+  }
+}
+
+function generateFileName() {
+  var formdata = getFormData();
+
+  var dj = generateCleanName(formdata.text1);
+  var date = generateCleanName(formdata.text3);
+
+  dj = (!dj) ? "noname" : dj;
+  date = (!date) ? "nodate" : date;
+
+  return dj + "_" + date + "_Sub_FM";
+
+}
 

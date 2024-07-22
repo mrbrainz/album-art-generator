@@ -25,6 +25,22 @@
 		"oAP": "/.gitignore",
 		"oF": 0
 		},
+	"/bobbin-for-apples.sublime-project": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/bobbin-for-apples.sublime-project",
+		"oF": 0
+		},
+	"/bobbin-for-apples.sublime-workspace": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/bobbin-for-apples.sublime-workspace",
+		"oF": 0
+		},
 	"/composer.json": {
 		"ft": 524288,
 		"oA": 1,
@@ -115,6 +131,14 @@
 		"oAP": "/generate.php",
 		"oF": 0
 		},
+	"/getdjimages.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/getdjimages.php",
+		"oF": 0
+		},
 	"/getnextshows.php": {
 		"cB": 0,
 		"ft": 8192,
@@ -137,6 +161,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/googlecaltest.php",
+		"oF": 0
+		},
+	"/imagecachefuncs.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/imagecachefuncs.php",
 		"oF": 0
 		},
 	"/img": {
@@ -387,14 +419,6 @@
 		"ft": 65536,
 		"oA": 1,
 		"oAP": "/build/tmp",
-		"oF": 0
-		},
-	"/tmp_phpInfo_968FDECA-FBED-4D63-8344-D80B254358F1-12049-000000B6B60A94D4_8.0.8.php": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/tmp_phpInfo_968FDECA-FBED-4D63-8344-D80B254358F1-12049-000000B6B60A94D4_8.0.8.php",
 		"oF": 0
 		},
 	"/vendor": {
@@ -2694,6 +2718,10 @@
 			"active": 0,
 			"flagValue": -1
 			},
+		"keep_numbers": {
+			"active": false,
+			"flagValue": -1
+			},
 		"keep_quoted_props": {
 			"active": 0,
 			"flagValue": -1
@@ -2717,6 +2745,10 @@
 		"passes": {
 			"active": 1,
 			"flagValue": 1
+			},
+		"preserve_annotations": {
+			"active": false,
+			"flagValue": -1
 			},
 		"properties": {
 			"active": 1,
@@ -2820,6 +2852,10 @@
 			},
 		"webkit": {
 			"active": 0,
+			"flagValue": -1
+			},
+		"wrap_func_args": {
+			"active": true,
 			"flagValue": -1
 			},
 		"wrap_iife": {
