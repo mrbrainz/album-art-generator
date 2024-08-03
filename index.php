@@ -163,6 +163,6 @@ function createTemplateDropdown() {
             <?php echo (getOption("localimgpdf")) ? 'let localimgpdf = true;' : 'let localimgpdf = false;' ?>
 
         </script>
-        <script src="js/generator.js?v=202309151632"></script>
+        <script src="js/generator.js?v=202408031609"></script>
     </body>
 </html>
